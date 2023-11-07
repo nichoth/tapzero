@@ -81,7 +81,7 @@ tapzero('my test', (t) => {
 
 ## Motivation
 
-Small library, zero dependencies
+### Zero dependencies
 
 ```
 $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine mocha
@@ -97,7 +97,7 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 
 ```
 
-Small library, small install size.
+### Small install size.
 
 |        |  @nichoth/tapzero  |  baretest  |  zora  |  pta  |  tape  |
 |--------|:---------:|:----------:|:------:|:-----:|:------:|
