@@ -1,17 +1,24 @@
-# @socketsupply/tapzero
+# @nichoth/tapzero
 
 Zero dependency test framework
+
+A fork of [raynos/tapzero](https://github.com/raynos/tapzero)
 
 ## Source code
 
 The implementation is <250 loc, (<500 with comments) ( https://github.com/Raynos/tapzero/blob/master/index.js ) and very readable.
+
+## install
+```sh
+npm i -D @nichoth/tapzero
+```
 
 ## Migrating from tape
 
 ```js
 const tape = require('tape')
 // Tapzero exports an object with a test function property.
-const tapzero = require('@socketsupply/tapzero').test
+const tapzero = require('@nichoth/tapzero').test
 ```
 
 ```js
@@ -92,11 +99,11 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 
 Small library, small install size.
 
-|        |  @socketsupply/tapzero  |  baretest  |  zora  |  pta  |  tape  |
+|        |  @nichoth/tapzero  |  baretest  |  zora  |  pta  |  tape  |
 |--------|:---------:|:----------:|:------:|:-----:|:------:|
-|pkg size|  [![tapzero](https://packagephobia.now.sh/badge?p=@socketsupply/tapzero)](https://packagephobia.now.sh/result?p=@socketsupply/tapzero)  |  [![baretest](https://packagephobia.now.sh/badge?p=baretest)](https://packagephobia.now.sh/result?p=baretest)  |  [![zora](https://packagephobia.now.sh/badge?p=zora)](https://packagephobia.now.sh/result?p=zora)  |  [![pta](https://packagephobia.now.sh/badge?p=pta)](https://packagephobia.now.sh/result?p=pta)  |  [![tape](https://packagephobia.now.sh/badge?p=tape)](https://packagephobia.now.sh/result?p=tape)  |
-|Min.js size|  [![@socketsupply/tapzero](https://badgen.net/bundlephobia/min/@socketsupply/tapzero)](https://bundlephobia.com/result?p=@socketsupply/tapzero)  |  [![baretest](https://badgen.net/bundlephobia/min/baretest)](https://bundlephobia.com/result?p=baretest)  |  [![zora](https://badgen.net/bundlephobia/min/zora)](https://bundlephobia.com/result?p=zora)  |  [![pta](https://badgen.net/bundlephobia/min/pta)](https://bundlephobia.com/result?p=pta)  |  [![tape](https://badgen.net/bundlephobia/min/tape)](https://bundlephobia.com/result?p=tape)  |
-|dep count|  [![@socketsupply/tapzero](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/@socketsupply/tapzero)  |  [![baretest](https://badgen.net/badge/dependencies/1/green)](https://www.npmjs.com/package/baretest)  |  [![zora](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/zora)  |  [![pta](https://badgen.net/badge/dependencies/23/orange)](https://www.npmjs.com/package/pta)  |  [![tape](https://badgen.net/badge/dependencies/44/orange)](https://www.npmjs.com/package/tape)  |
+|pkg size|  [![tapzero](https://packagephobia.now.sh/badge?p=@nichoth/tapzero)](https://packagephobia.now.sh/result?p=@nichoth/tapzero)  |  [![baretest](https://packagephobia.now.sh/badge?p=baretest)](https://packagephobia.now.sh/result?p=baretest)  |  [![zora](https://packagephobia.now.sh/badge?p=zora)](https://packagephobia.now.sh/result?p=zora)  |  [![pta](https://packagephobia.now.sh/badge?p=pta)](https://packagephobia.now.sh/result?p=pta)  |  [![tape](https://packagephobia.now.sh/badge?p=tape)](https://packagephobia.now.sh/result?p=tape)  |
+|Min.js size|  [![@nichoth/tapzero](https://badgen.net/bundlephobia/min/@nichoth/tapzero)](https://bundlephobia.com/result?p=@nichoth/tapzero)  |  [![baretest](https://badgen.net/bundlephobia/min/baretest)](https://bundlephobia.com/result?p=baretest)  |  [![zora](https://badgen.net/bundlephobia/min/zora)](https://bundlephobia.com/result?p=zora)  |  [![pta](https://badgen.net/bundlephobia/min/pta)](https://bundlephobia.com/result?p=pta)  |  [![tape](https://badgen.net/bundlephobia/min/tape)](https://bundlephobia.com/result?p=tape)  |
+|dep count|  [![@nichoth/tapzero](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/@nichoth/tapzero)  |  [![baretest](https://badgen.net/badge/dependencies/1/green)](https://www.npmjs.com/package/baretest)  |  [![zora](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/zora)  |  [![pta](https://badgen.net/badge/dependencies/23/orange)](https://www.npmjs.com/package/pta)  |  [![tape](https://badgen.net/badge/dependencies/44/orange)](https://www.npmjs.com/package/tape)  |
 
 |        |  Mocha  |  Ava  |  Jest  |  tap  |
 |:------:|:-------:|:-----:|:------:|:-----:|
@@ -107,7 +114,7 @@ Small library, small install size.
 ## Docs
 
 ```js
-const test = require('@socketsupply/tapzero').test
+const test = require('@nichoth/tapzero').test
 ```
 
 ### `test(name, [fn])`
@@ -127,7 +134,7 @@ Creates a test case that will be skipped
 ## Harness docs
 
 ```js
-const testHarness = require('@socketsupply/tapzero/harness')
+const testHarness = require('@nichoth/tapzero/harness')
 ```
 
 See [HARNESS.md](./HARNESS.md)
