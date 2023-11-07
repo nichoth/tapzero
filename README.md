@@ -6,7 +6,7 @@ A fork of [raynos/tapzero](https://github.com/raynos/tapzero)
 
 ## Source code
 
-The implementation is <250 loc, (<500 with comments) ( https://github.com/Raynos/tapzero/blob/master/index.js ) and very readable.
+The implementation is <250 loc, (<500 with comments) ( https://github.com/nichoth/tapzero/blob/master/index.js ) and very readable.
 
 ## install
 ```sh
