@@ -114,7 +114,7 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 ## Docs
 
 ```js
-const test = require('@nichoth/tapzero').test
+import { test } from '@nichoth/tapzero'
 ```
 
 ### `test(name, [fn])`
