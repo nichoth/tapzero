@@ -97,7 +97,7 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 
 ```
 
-### Small install size.
+### Small install size
 
 |        |  @nichoth/tapzero  |  baretest  |  zora  |  pta  |  tape  |
 |--------|:---------:|:----------:|:------:|:-----:|:------:|
