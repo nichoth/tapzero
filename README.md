@@ -1,4 +1,8 @@
 # @nichoth/tapzero
+![tests](https://github.com/nichoth/tapzero/actions/workflows/nodejs.yml/badge.svg)
+[![Socket Badge](https://socket.dev/api/badge/npm/package/@nichoth/tapzero)](https://socket.dev/npm/package/@nichoth/tapzero)
+![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)
+![license](https://img.shields.io/badge/license-MIT-brightgreen)
 
 Zero dependency test framework
 
