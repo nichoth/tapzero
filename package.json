@@ -56,7 +56,13 @@
   },
   "contributors": [
     {
-      "name": "Raynos"
+      "name": "nichoth",
+      "email": "nichoth@nichoth.com",
+      "url": "https://nichoth.com/"
+    },
+    {
+      "name": "Raynos",
+      "email": "raynos2@gmail.com"
     }
   ],
   "licenses": [
