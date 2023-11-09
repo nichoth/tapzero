@@ -1,6 +1,6 @@
 {
   "name": "@nichoth/tapzero",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Smallest test library",
   "main": "index.js",
   "scripts": {
