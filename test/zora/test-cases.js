@@ -24,7 +24,8 @@ for (const file of JS_FILES) {
       const info = await exec('node', [fileName])
 
       const shouldErr = file.endsWith('_fail.js')
-      t.equal(info.exitCode, shouldErr ? 1 : 0)
+      t.equal(info.exitCode, shouldErr ? 1 : 0,
+        'should exit with ' + (shouldErr ? '1' : '0'))
 
       const stripped = strip(info.combined)
 
@@ -32,7 +33,7 @@ for (const file of JS_FILES) {
         fileName.replace('.js', '_out.txt'),
         'utf8'
       )
-      equalDiff(t, stripped.trim(), expected.trim())
+      equalDiff(t, stripped.trim(), expected.trim(), 'Text output is ok')
     })().then(t.end, t.end)
   })
 }
@@ -41,10 +42,11 @@ for (const file of JS_FILES) {
  * @param {test.Test} t
  * @param {string} actual
  * @param {string} expected
+ * @param {string} text
  * @returns {void}
  */
-function equalDiff (t, actual, expected) {
-  t.equal(actual, expected)
+function equalDiff (t, actual, expected, text) {
+  t.equal(actual, expected, text)
   if (actual !== expected) {
     console.log('\n\n--------------diff:--------------\n')
 
