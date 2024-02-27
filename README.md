@@ -1,4 +1,4 @@
-# @bicycle-codes/tapzero
+# tapzero
 ![tests](https://github.com/bicycle-codes/tapzero/actions/workflows/nodejs.yml/badge.svg)
 [![Socket Badge](https://socket.dev/api/badge/npm/package/@bicycle-codes/tapzero)](https://socket.dev/npm/package/@bicycle-codes/tapzero)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
