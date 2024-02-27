@@ -1,9 +1,10 @@
 # @bicycle-codes/tapzero
-![tests](https://github.com/nichoth/tapzero/actions/workflows/nodejs.yml/badge.svg)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@nichoth/tapzero)](https://socket.dev/npm/package/@nichoth/tapzero)
-![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)
+![tests](https://github.com/bicycle-codes/tapzero/actions/workflows/nodejs.yml/badge.svg)
+[![Socket Badge](https://socket.dev/api/badge/npm/package/@bicycle-codes/tapzero)](https://socket.dev/npm/package/@bicycle-codes/tapzero)
+[![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
-![license](https://img.shields.io/badge/license-MIT-brightgreen)
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+
 
 Zero dependency test framework
 
@@ -11,7 +12,7 @@ A fork of [raynos/tapzero](https://github.com/raynos/tapzero)
 
 ## Source code
 
-The implementation is <250 loc, (<500 with comments) ( https://github.com/nichoth/tapzero/blob/master/index.js ) and very readable.
+The implementation is <250 loc, (<500 with comments) ( https://github.com/bicycle-codes/tapzero/blob/master/index.js ) and very readable.
 
 ## install
 ```sh
@@ -66,8 +67,15 @@ tapzero('planning example', t => {
 })
 ```
 
-### API
+## API
 No aliases, smaller API surface area
+
+```js
+import { test } from '@bicycle-codes/tapzero'
+test('example test name', async t => {
+  // ...
+})
+```
 
 ```js
 tape('my test', (t) => {
@@ -83,6 +91,27 @@ tapzero('my test', (t) => {
   t.equal(2, 2)
 })
 ```
+
+### deepEqual (actual, expected, msg)
+Check that two objects have equal leaves.
+
+### notDeepEqual (actual, expected, msg)
+Passes if the two given objects are not equal.
+
+### equal (actual, expected, msg)
+Check that two given *values* are equal.
+
+### notEqual (actual, expected, msg)
+Pass if the two *values* are not equal.
+
+### fail (msg)
+Explicitly fail.
+
+### ok (value, msg)
+Check that `value` is truthy.
+
+### throws (fn, expected, message)
+Check that `fn` does throw an error.
 
 ## Motivation
 
