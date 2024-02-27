@@ -1,6 +1,6 @@
 {
   "name": "@bicycle-codes/tapzero",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "Smallest test library",
   "main": "index.js",
   "scripts": {
