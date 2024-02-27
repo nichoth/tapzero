@@ -1,7 +1,8 @@
-# @nichoth/tapzero
+# @bicycle-codes/tapzero
 ![tests](https://github.com/nichoth/tapzero/actions/workflows/nodejs.yml/badge.svg)
 [![Socket Badge](https://socket.dev/api/badge/npm/package/@nichoth/tapzero)](https://socket.dev/npm/package/@nichoth/tapzero)
 ![module](https://img.shields.io/badge/module-ESM%2FCJS-blue)
+[![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
 ![license](https://img.shields.io/badge/license-MIT-brightgreen)
 
 Zero dependency test framework
@@ -14,7 +15,7 @@ The implementation is <250 loc, (<500 with comments) ( https://github.com/nichot
 
 ## install
 ```sh
-npm i -D @nichoth/tapzero
+npm i -D @bicycle-codes/tapzero
 ```
 
 ## Migrating from tape
@@ -22,7 +23,7 @@ npm i -D @nichoth/tapzero
 ```js
 const tape = require('tape')
 // Tapzero exports an object with a test function property.
-const tapzero = require('@nichoth/tapzero').test
+const tapzero = require('@bicycle-codes/tapzero').test
 ```
 
 ```js
@@ -103,11 +104,11 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 
 ### Small install size
 
-|        |  @nichoth/tapzero  |  baretest  |  zora  |  pta  |  tape  |
+|        |  @bicycle-codes/tapzero  |  baretest  |  zora  |  pta  |  tape  |
 |--------|:---------:|:----------:|:------:|:-----:|:------:|
-|pkg size|  [![tapzero](https://packagephobia.now.sh/badge?p=@nichoth/tapzero)](https://packagephobia.now.sh/result?p=@nichoth/tapzero)  |  [![baretest](https://packagephobia.now.sh/badge?p=baretest)](https://packagephobia.now.sh/result?p=baretest)  |  [![zora](https://packagephobia.now.sh/badge?p=zora)](https://packagephobia.now.sh/result?p=zora)  |  [![pta](https://packagephobia.now.sh/badge?p=pta)](https://packagephobia.now.sh/result?p=pta)  |  [![tape](https://packagephobia.now.sh/badge?p=tape)](https://packagephobia.now.sh/result?p=tape)  |
-|Min.js size|  [![@nichoth/tapzero](https://badgen.net/bundlephobia/min/@nichoth/tapzero)](https://bundlephobia.com/result?p=@nichoth/tapzero)  |  [![baretest](https://badgen.net/bundlephobia/min/baretest)](https://bundlephobia.com/result?p=baretest)  |  [![zora](https://badgen.net/bundlephobia/min/zora)](https://bundlephobia.com/result?p=zora)  |  [![pta](https://badgen.net/bundlephobia/min/pta)](https://bundlephobia.com/result?p=pta)  |  [![tape](https://badgen.net/bundlephobia/min/tape)](https://bundlephobia.com/result?p=tape)  |
-|dep count|  [![@nichoth/tapzero](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/@nichoth/tapzero)  |  [![baretest](https://badgen.net/badge/dependencies/1/green)](https://www.npmjs.com/package/baretest)  |  [![zora](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/zora)  |  [![pta](https://badgen.net/badge/dependencies/23/orange)](https://www.npmjs.com/package/pta)  |  [![tape](https://badgen.net/badge/dependencies/44/orange)](https://www.npmjs.com/package/tape)  |
+|pkg size|  [![tapzero](https://packagephobia.now.sh/badge?p=@bicycle-codes/tapzero)](https://packagephobia.now.sh/result?p=@bicycle-codes/tapzero)  |  [![baretest](https://packagephobia.now.sh/badge?p=baretest)](https://packagephobia.now.sh/result?p=baretest)  |  [![zora](https://packagephobia.now.sh/badge?p=zora)](https://packagephobia.now.sh/result?p=zora)  |  [![pta](https://packagephobia.now.sh/badge?p=pta)](https://packagephobia.now.sh/result?p=pta)  |  [![tape](https://packagephobia.now.sh/badge?p=tape)](https://packagephobia.now.sh/result?p=tape)  |
+|Min.js size|  [![@bicycle-codes/tapzero](https://badgen.net/bundlephobia/min/@bicycle-codes/tapzero)](https://bundlephobia.com/result?p=@bicycle-codes/tapzero)  |  [![baretest](https://badgen.net/bundlephobia/min/baretest)](https://bundlephobia.com/result?p=baretest)  |  [![zora](https://badgen.net/bundlephobia/min/zora)](https://bundlephobia.com/result?p=zora)  |  [![pta](https://badgen.net/bundlephobia/min/pta)](https://bundlephobia.com/result?p=pta)  |  [![tape](https://badgen.net/bundlephobia/min/tape)](https://bundlephobia.com/result?p=tape)  |
+|dep count|  [![@bicycle-codes/tapzero](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/@bicycle-codes/tapzero)  |  [![baretest](https://badgen.net/badge/dependencies/1/green)](https://www.npmjs.com/package/baretest)  |  [![zora](https://badgen.net/badge/dependencies/0/green)](https://www.npmjs.com/package/zora)  |  [![pta](https://badgen.net/badge/dependencies/23/orange)](https://www.npmjs.com/package/pta)  |  [![tape](https://badgen.net/badge/dependencies/44/orange)](https://www.npmjs.com/package/tape)  |
 
 |        |  Mocha  |  Ava  |  Jest  |  tap  |
 |:------:|:-------:|:-----:|:------:|:-----:|
@@ -118,7 +119,7 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 ## Docs
 
 ```js
-import { test } from '@nichoth/tapzero'
+import { test } from '@bicycle-codes/tapzero'
 ```
 
 ### `test(name, [fn])`
@@ -138,7 +139,7 @@ Creates a test case that will be skipped
 ## Harness docs
 
 ```js
-const testHarness = require('@nichoth/tapzero/harness')
+const testHarness = require('@bicycle-codes/tapzero/harness')
 ```
 
 See [HARNESS.md](./HARNESS.md)

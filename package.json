@@ -1,5 +1,5 @@
 {
-  "name": "@nichoth/tapzero",
+  "name": "@bicycle-codes/tapzero",
   "version": "0.8.4",
   "description": "Smallest test library",
   "main": "index.js",
@@ -24,7 +24,7 @@
   "binDependencies": {
     "tsdocstandard": "16.1.0",
     "type-coverage": "2.14.2",
-    "typescript": "4.0.5"
+    "typescript": "5.3.3"
   },
   "devDependencies": {
     "@pre-bundled/tape": "4.11.0",
@@ -49,11 +49,11 @@
     "fast-deep-equal.js"
   ],
   "author": "Raynos <raynos2@gmail.com>",
-  "repository": "git://github.com/nichoth/tapzero.git",
-  "homepage": "https://github.com/nichoth/tapzero",
+  "repository": "git://github.com/bicycle-codes/tapzero.git",
+  "homepage": "https://github.com/bicycle-codes/tapzero",
   "bugs": {
-    "url": "https://github.com/nichoth//tapzero/issues",
-    "email": "nichoth@gmail.com"
+    "url": "https://github.com/bicycle-codes/tapzero/issues",
+    "email": "nichoth@nichoth.com"
   },
   "contributors": [
     {
@@ -69,7 +69,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/nichoth/tapzero/raw/master/LICENSE"
+      "url": "http://github.com/bicycle-codes/tapzero/raw/master/LICENSE"
     }
   ]
 }
