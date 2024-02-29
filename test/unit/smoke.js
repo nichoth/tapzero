@@ -2,10 +2,13 @@
 
 // @ts-check
 
-const test = require('@pre-bundled/tape')
+// const test = require('@pre-bundled/tape')
+import test from '@pre-bundled/tape'
+import { TestRunner } from '../../index.js'
+import { collect, trimPrefix } from '../util.js'
 
-const { TestRunner } = require('../../index.js')
-const { collect, trimPrefix } = require('../util.js')
+// const { TestRunner } = require('../../index.js')
+// const { collect, trimPrefix } = require('../util.js')
 
 test('tapzero outputs TAP', (assert) => {
   const h = new TestRunner(collect(verify))

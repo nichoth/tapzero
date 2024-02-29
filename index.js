@@ -2,7 +2,7 @@
 
 // @ts-check
 
-const deepEqual = require('./fast-deep-equal')
+import { equal as deepEqual } from './fast-deep-equal.js'
 
 const NEW_LINE_REGEX = /\n/g
 const OBJ_TO_STRING = Object.prototype.toString

@@ -2,20 +2,21 @@
 
 // @ts-check
 
-const path = require('path')
+// const path = require('path')
+import path from 'path'
 
 const NUMBER_LINE = /^1\.\.\d+$/
 const FAIL_LINE = /^# fail[ ]{2}\d+$/
 
-exports.collect = collect
-exports.strip = strip
-exports.trimPrefix = trimPrefix
+// exports.collect = collect
+// exports.strip = strip
+// exports.trimPrefix = trimPrefix
 
 /**
  * @param {(a: string) => void} fn
  * @returns {(line: string) => void}
  */
-function collect (fn) {
+export function collect (fn) {
   /** @type {string[]} */
   const total = []
   let almostFinished = false
@@ -43,7 +44,7 @@ function collect (fn) {
  * @param {string} line
  * @returns {string}
  */
-function strip (line) {
+export function strip (line) {
   const withoutTestDir = line.replace(
     new RegExp(__dirname, 'g'), '$TEST'
   )
@@ -84,7 +85,7 @@ function strip (line) {
  * @param {TemplateStringsArray} text
  * @returns {string}
  */
-function trimPrefix (text) {
+export function trimPrefix (text) {
   const lines = text[0].split('\n')
   let commonPrefix = Infinity
   for (const line of lines) {
