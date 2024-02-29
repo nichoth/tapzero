@@ -52,7 +52,7 @@
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
     "auto-changelog": "^2.4.0",
-    "diff": "4.0.2",
+    "diff": "5.2.0",
     "esbuild": "^0.20.1",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.10.1",

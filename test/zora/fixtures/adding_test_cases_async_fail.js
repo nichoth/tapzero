@@ -1,5 +1,5 @@
 // @ts-nocheck
-const test = require('../../../index').test
+import { test } from '../../../index.js'
 
 const wait = time => new Promise(resolve => {
     setTimeout(() => resolve(), time);

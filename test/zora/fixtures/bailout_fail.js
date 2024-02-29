@@ -1,4 +1,4 @@
-const test = require('../../../index').test
+import { test } from '../../../index.js'
 
 test('will not go to the end', function _(t) {
     t.ok(true, 'okay');

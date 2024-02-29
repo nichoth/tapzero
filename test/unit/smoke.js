@@ -96,14 +96,13 @@ test('zerotap handles failures', (assert) => {
             operator: equal
             expected: "two"
             actual:   "one"
-            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: this test fails
-                  at Test._assert ($TAPE/index.js:$LINE:$COL)
-                  at Test.equal ($TAPE/index.js:$LINE:$COL)
-                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
+                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.equal (file://$TAPE/index.js:$LINE:$COL)
+                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
           ...
 
         1..3
@@ -134,13 +133,12 @@ test('zerotap handles errors', (assert) => {
             operator: ifError
             expected: "no error"
             actual:   "foo"
-            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: foo
-                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
                   at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
@@ -178,15 +176,14 @@ test('zerotap handles multiple asserts', (assert) => {
             operator: ok
             expected: "truthy value"
             actual:   false
-            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: some message
-                  at Test._assert ($TAPE/index.js:$LINE:$COL)
-                  at Test.ok ($TAPE/index.js:$LINE:$COL)
-                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.ok (file://$TAPE/index.js:$LINE:$COL)
+                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
                   at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
@@ -295,15 +292,14 @@ test('zerotap undefined is string', (assert) => {
             operator: equal
             expected: "foo"
             actual:   undefined
-            at:       Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: should be equal
-                  at Test._assert ($TAPE/index.js:$LINE:$COL)
-                  at Test.equal ($TAPE/index.js:$LINE:$COL)
-                  at Test.fn ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.equal (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.fn (file://$TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
                   at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
@@ -337,15 +333,14 @@ test('zerotap fail', (assert) => {
             operator: fail
             expected: "fail not called"
             actual:   "fail called"
-            at:       Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
             stack:    |-
               Error: my message
-                  at Test._assert ($TAPE/index.js:$LINE:$COL)
-                  at Test.fail ($TAPE/index.js:$LINE:$COL)
-                  at Test._ [as fn] ($TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run ($TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run ($TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout ($TAPE/index.js:$LINE:$COL)
+                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.fail (file://$TAPE/index.js:$LINE:$COL)
+                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
+                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
+                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
                   at listOnTimeout (node:internal/timers:$LINE:$COL)
                   at process.processTimers (node:internal/timers:$LINE:$COL)
           ...
