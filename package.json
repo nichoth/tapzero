@@ -1,13 +1,35 @@
 {
   "name": "@bicycle-codes/tapzero",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "Smallest test library",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "tsc": "npr tsc -p jsconfig.json --maxNodeModuleJsDepth 0",
-    "test": "npm run tsc && node test/harness.js && node test/index.js && npr type-coverage",
-    "postversion": "git push && git push --tags && npm publish",
-    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js"
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && cp ./fast-deep-equal.js dist",
+    "build-cjs": "esbuild ./index.js --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs --sourcemap=inline",
+    "build-esm": "cp ./index.js ./dist",
+    "test": "npm run build && node ./test/index.js | tap-arc",
+    "coverage": "type-coverage",
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js",
+    "version": "auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
+    "postversion": "git push --follow-tags && npm publish",
+    "prepublishOnly": "npm run build"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./*": {
+      "import": [
+        "./dist/*.js",
+        "./dist/*"
+      ],
+      "require": [
+        "./dist/*.cjs",
+        "./dist/*"
+      ]
+    }
   },
   "typeCoverage": {
     "atLeast": 98,
@@ -20,20 +42,19 @@
       "test/zora/fixtures/*.js"
     ]
   },
-  "binDependencies": {
-    "tsdocstandard": "16.1.0",
-    "type-coverage": "2.14.2",
-    "typescript": "5.3.3"
-  },
   "devDependencies": {
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
-    "diff": "4.0.2",
+    "auto-changelog": "^2.4.0",
+    "diff": "5.2.0",
+    "esbuild": "^0.20.1",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.10.1",
     "request": "2.88.2",
     "tap-arc": "^1.2.2",
-    "tiny-benchy": "1.0.1"
+    "tiny-benchy": "1.0.1",
+    "type-coverage": "2.27.1",
+    "typescript": "5.3.3"
   },
   "tsdocstandard": {
     "ignore": [
@@ -43,9 +64,7 @@
     ]
   },
   "files": [
-    "index.js",
-    "harness.js",
-    "fast-deep-equal.js"
+    "./dist/*"
   ],
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/bicycle-codes/tapzero.git",

@@ -6,7 +6,7 @@
 
 
 
-module.exports = function equal(a, b) {
+export function equal(a, b) {
   if (a === b) return true;
 
   if (a && b && typeof a == 'object' && typeof b == 'object') {

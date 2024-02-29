@@ -2,19 +2,29 @@
 
 // @ts-check
 
-const test = require('@pre-bundled/tape')
-const fs = require('fs')
-const path = require('path')
-const childProcess = require('child_process')
-const util = require('util')
-const jsdiff = require('diff')
+import test from '@pre-bundled/tape'
+import { readdirSync } from 'fs'
+import { readFile } from 'fs/promises'
+import path from 'path'
+import { spawn } from 'child_process'
+import { diffChars } from 'diff'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { strip } from '../util.js'
 
-const { strip } = require('../util')
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const readFile = util.promisify(fs.readFile)
+// const test = require('@pre-bundled/tape')
+// const fs = require('fs')
+// const path = require('path')
+// const childProcess = require('child_process')
+// const util = require('util')
+// const jsdiff = require('diff')
+
+// const { strip } = require('../util')
 
 const dir = path.join(__dirname, 'fixtures')
-const files = fs.readdirSync(dir)
+const files = readdirSync(dir)
 const JS_FILES = files.filter(f => f.endsWith('.js'))
 
 for (const file of JS_FILES) {
@@ -50,7 +60,7 @@ function equalDiff (t, actual, expected, text) {
   if (actual !== expected) {
     console.log('\n\n--------------diff:--------------\n')
 
-    const diff = jsdiff.diffChars(actual, expected)
+    const diff = diffChars(actual, expected)
     process.stderr.write(gray('-------------------------\n'))
     diff.forEach(function (part) {
       // green for additions, red for deletions
@@ -82,7 +92,7 @@ function equalDiff (t, actual, expected, text) {
  */
 function exec (command, args) {
   return new Promise((resolve, reject) => {
-    const proc = childProcess.spawn(command, args)
+    const proc = spawn(command, args)
     let stdout = ''
     let stderr = ''
     let combined = ''

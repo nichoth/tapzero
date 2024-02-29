@@ -1,6 +1,9 @@
 {
   "extends": "./_types/base-tsconfig.json",
   "compilerOptions": {
+    "module": "NodeNext",
+    "noImplicitAny": false,
+    "moduleResolution": "nodenext",
     "baseUrl": "./",
     "paths": {
       "@pre-bundled/tape": ["./_types/pre-bundled__tape"],

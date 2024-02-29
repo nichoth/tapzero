@@ -3,7 +3,6 @@
 /**
  * @typedef {import('@pre-bundled/tape').Test} Test
  * @typedef {import('@pre-bundled/tape')} tape
- * @typedef {import('@pre-bundled/tape').TestCase} TestCase
  */
 
 const util = require('util')

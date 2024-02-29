@@ -2,5 +2,5 @@
 
 // @ts-check
 
-require('./unit/smoke')
-require('./zora/test-cases')
+import './unit/smoke.js'
+import './zora/test-cases.js'

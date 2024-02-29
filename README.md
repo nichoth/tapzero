@@ -22,9 +22,9 @@ npm i -D @bicycle-codes/tapzero
 ## Migrating from tape
 
 ```js
-const tape = require('tape')
+import tape from 'tape'
 // Tapzero exports an object with a test function property.
-const tapzero = require('@bicycle-codes/tapzero').test
+import { test } from '@bicycle-codes/tapzero'
 ```
 
 ```js
@@ -34,7 +34,7 @@ tape('my test', (t) => {
 })
 
 // Auto ending behavior on function completion
-tapzero('my test', (t) => {
+test('my test', (t) => {
   t.equal(2, 2, 'ok')
   // t.end() does not exist.
 })

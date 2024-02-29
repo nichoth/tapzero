@@ -2,7 +2,7 @@
 
 // @ts-check
 
-const deepEqual = require('./fast-deep-equal')
+import { equal as deepEqual } from './fast-deep-equal.js'
 
 const NEW_LINE_REGEX = /\n/g
 const OBJ_TO_STRING = Object.prototype.toString
@@ -25,7 +25,7 @@ let CACHED_FILE
 /**
  * @class
  */
-class Test {
+export class Test {
   /**
    * @constructor
    * @param {string} name
@@ -310,7 +310,6 @@ class Test {
     return this._result
   }
 }
-exports.Test = Test
 
 /**
  * @returns {string}
@@ -368,7 +367,7 @@ function findAtLineFromError (e) {
 /**
  * @class
  */
-class TestRunner {
+export class TestRunner {
   /**
    * @constructor
    * @param {(lines: string) => void} [report]
@@ -495,7 +494,6 @@ class TestRunner {
     } else throw new Error('onFinish() expects a function')
   }
 }
-exports.TestRunner = TestRunner
 
 /**
  * @param {string} line
@@ -505,36 +503,32 @@ function printLine (line) {
   console.log(line)
 }
 
-const GLOBAL_TEST_RUNNER = new TestRunner()
-exports.GLOBAL_TEST_RUNNER = GLOBAL_TEST_RUNNER
+export const GLOBAL_TEST_RUNNER = new TestRunner()
 
 /**
  * @param {string} name
  * @param {TestFn} [fn]
  * @returns {void}
  */
-function only (name, fn) {
+export function only (name, fn) {
   if (!fn) return
   GLOBAL_TEST_RUNNER.add(name, fn, true)
 }
-exports.only = only
 
 /**
  * @param {string} _name
  * @param {TestFn} [_fn]
  * @returns {void}
  */
-function skip (_name, _fn) {}
-exports.skip = skip
+export function skip (_name, _fn) {}
 
 /**
  * @param {boolean} strict
  * @returns {void}
  */
-function setStrict (strict) {
+export function setStrict (strict) {
   GLOBAL_TEST_RUNNER.strict = strict
 }
-exports.setStrict = setStrict
 
 /**
  * @type {{
@@ -547,13 +541,12 @@ exports.setStrict = setStrict
  * @param {TestFn} [fn]
  * @returns {void}
  */
-function test (name, fn) {
+export function test (name, fn) {
   if (!fn) return
   GLOBAL_TEST_RUNNER.add(name, fn, false)
 }
 test.only = only
 test.skip = skip
-exports.test = test
 
 /**
  * @param {Error} err
