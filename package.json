@@ -5,15 +5,14 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "//tsc": "npr tsc -p jsconfig.json --maxNodeModuleJsDepth 0",
-    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm",
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && cp ./fast-deep-equal.js dist",
     "build-cjs": "esbuild ./index.js --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs --sourcemap=inline",
     "build-esm": "cp ./index.js ./dist",
-    "//test": "npm run build && node test/index.js && npr type-coverage",
-    "test": "npm run build && cd test && node index.js && cd .. && npr type-coverage",
-    "postversion": "git push --follow-tags && npm publish",
+    "test": "npm run build && node ./test/index.js | tap-arc",
+    "coverage": "type-coverage",
     "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js",
     "version": "auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
+    "postversion": "git push --follow-tags && npm publish",
     "prepublishOnly": "npm run build"
   },
   "exports": {
@@ -43,11 +42,6 @@
       "test/zora/fixtures/*.js"
     ]
   },
-  "binDependencies": {
-    "tsdocstandard": "16.1.0",
-    "type-coverage": "2.14.2",
-    "typescript": "5.3.3"
-  },
   "devDependencies": {
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
@@ -58,7 +52,9 @@
     "npm-bin-deps": "1.10.1",
     "request": "2.88.2",
     "tap-arc": "^1.2.2",
-    "tiny-benchy": "1.0.1"
+    "tiny-benchy": "1.0.1",
+    "type-coverage": "2.27.1",
+    "typescript": "5.3.3"
   },
   "tsdocstandard": {
     "ignore": [
