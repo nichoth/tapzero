@@ -92,25 +92,40 @@ tapzero('my test', (t) => {
 })
 ```
 
-### deepEqual (actual, expected, msg)
-Check that two objects have equal leaves.
+### `test(name, [fn])`
 
-### notDeepEqual (actual, expected, msg)
+Run a single named test case. The `fn` will be called with the `t` test object.
+
+Tests run one at a time and complete when the `fn` completes. The `fn` can
+be async.
+
+### `test.only(name, fn)`
+
+Like `test(name, fn)` except if you use `.only` this is the only test case that will run for the entire process, all other test cases using tape will be ignored.
+
+### `test.skip(name, [fn])`
+
+Creates a test case that will be skipped
+
+### `deepEqual (actual, expected, msg)`
+Check that two objects have equal shapes.
+
+### `notDeepEqual (actual, expected, msg)`
 Passes if the two given objects are not equal.
 
-### equal (actual, expected, msg)
+### `equal (actual, expected, msg)`
 Check that two given *values* are equal.
 
-### notEqual (actual, expected, msg)
+### `notEqual (actual, expected, msg)`
 Pass if the two *values* are not equal.
 
-### fail (msg)
+### `fail (msg)`
 Explicitly fail.
 
-### ok (value, msg)
+### `ok (value, msg)`
 Check that `value` is truthy.
 
-### throws (fn, expected, message)
+### `throws (fn, expected, message)`
 Check that `fn` does throw an error.
 
 ## Motivation
@@ -149,17 +164,3 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 ```js
 import { test } from '@bicycle-codes/tapzero'
 ```
-
-### `test(name, [fn])`
-
-Run a single named test case. The `fn` will be called with the `t` test object.
-
-Tests run one at a time and complete when the `fn` completes, the `fn` can be async.
-
-### `test.only(name, fn)`
-
-Like `test(name, fn)` except if you use `.only` this is the only test case that will run for the entire process, all other test cases using tape will be ignored.
-
-### `test.skip(name, [fn])`
-
-Creates a test case that will be skipped
