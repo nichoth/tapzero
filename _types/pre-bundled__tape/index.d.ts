@@ -52,10 +52,6 @@ declare namespace tape {
     function only(cb: TestCase): void;
 
     /**
-     * Create a new test harness instance, which is a function like test(), but with a new pending stack and test state.
-     */
-    function createHarness(): typeof tape;
-    /**
      * Create a stream of output, bypassing the default output stream that writes messages to console.log().
      * By default stream will be a text stream of TAP output, but you can get an object stream instead by setting opts.objectMode to true.
      */

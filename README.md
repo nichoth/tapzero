@@ -163,12 +163,3 @@ Like `test(name, fn)` except if you use `.only` this is the only test case that 
 ### `test.skip(name, [fn])`
 
 Creates a test case that will be skipped
-
-## Harness docs
-
-```js
-const testHarness = require('@bicycle-codes/tapzero/harness')
-```
-
-See [HARNESS.md](./HARNESS.md)
- 
