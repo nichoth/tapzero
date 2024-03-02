@@ -3,11 +3,10 @@
   "compilerOptions": {
     "module": "NodeNext",
     "noImplicitAny": false,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "Nodenext",
     "baseUrl": "./",
     "paths": {
       "@pre-bundled/tape": ["./_types/pre-bundled__tape"],
-      "@pre-bundled/rimraf": ["./_types/pre-bundled__rimraf"],
       "*" : ["./_types/*"]
     }
   },
