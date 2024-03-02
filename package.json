@@ -57,7 +57,8 @@
     "tap-arc": "^1.2.2",
     "tiny-benchy": "1.0.1",
     "type-coverage": "2.27.1",
-    "typescript": "5.3.3"
+    "typescript": "5.3.3",
+    "typescript-coverage-report": "^1.0.0"
   },
   "tsdocstandard": {
     "ignore": [

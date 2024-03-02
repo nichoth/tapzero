@@ -1,7 +1,7 @@
 {
   "extends": "./_types/base-tsconfig.json",
   "compilerOptions": {
-    "module": "NodeNext",
+    "module": "nodenext",
     "noImplicitAny": false,
     "moduleResolution": "Nodenext",
     "baseUrl": "./",
