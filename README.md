@@ -72,6 +72,7 @@ No aliases, smaller API surface area
 
 ```js
 import { test } from '@bicycle-codes/tapzero'
+
 test('example test name', async t => {
   // ...
 })
@@ -107,28 +108,30 @@ Like `test(name, fn)` except if you use `.only` this is the only test case that 
 
 Creates a test case that will be skipped
 
-### `deepEqual (actual, expected, msg)`
+### `t.deepEqual (actual, expected, msg)`
 Check that two objects have equal shapes.
 
-### `notDeepEqual (actual, expected, msg)`
+### `t.notDeepEqual (actual, expected, msg)`
 Passes if the two given objects are not equal.
 
-### `equal (actual, expected, msg)`
+### `t.equal (actual, expected, msg)`
 Check that two given *values* are equal.
 
-### `notEqual (actual, expected, msg)`
+### `t.notEqual (actual, expected, msg)`
 Pass if the two *values* are not equal.
 
-### `fail (msg)`
+### `t.fail (msg)`
 Explicitly fail.
 
-### `ok (value, msg)`
+### `t.ok (value, msg)`
 Check that `value` is truthy.
 
-### `throws (fn, expected, message)`
+### `t.throws (fn, expected, message)`
 Check that `fn` does throw an error.
 
 ## Motivation
+
+Small library, zero dependencies
 
 ### Zero dependencies
 
@@ -158,9 +161,3 @@ $ package-size ./build/src/index.js zora baretest,assert qunit tape jasmine moch
 |pkg size|  [![mocha](https://packagephobia.now.sh/badge?p=mocha)](https://packagephobia.now.sh/result?p=mocha)  |  [![ava](https://packagephobia.now.sh/badge?p=ava)](https://packagephobia.now.sh/result?p=ava) |  [![jest](https://packagephobia.now.sh/badge?p=jest)](https://packagephobia.now.sh/result?p=jest) |  [![tap](https://packagephobia.now.sh/badge?p=tap)](https://packagephobia.now.sh/result?p=tap) |
 |Min.js size|  [![mocha](https://badgen.net/bundlephobia/min/mocha)](https://bundlephobia.com/result?p=mocha)  |  [![ava](https://badgen.net/bundlephobia/min/ava)](https://bundlephobia.com/result?p=ava)  |  [![jest](https://badgen.net/bundlephobia/min/jest)](https://bundlephobia.com/result?p=jest)  |  [![tap](https://badgen.net/bundlephobia/min/tap)](https://bundlephobia.com/result?p=tap)  |
 |dep count|  [![mocha](https://badgen.net/badge/dependencies/104/red)](https://www.npmjs.com/package/mocha)  |  [![ava](https://badgen.net/badge/dependencies/300/red)](https://www.npmjs.com/package/ava)  |  [![jest](https://badgen.net/badge/dependencies/799/red)](https://www.npmjs.com/package/jest)  |  [![tap](https://badgen.net/badge/dependencies/390/red)](https://www.npmjs.com/package/tap)  |
-
-## Docs
-
-```js
-import { test } from '@bicycle-codes/tapzero'
-```
