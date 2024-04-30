@@ -14,15 +14,6 @@ import { strip } from '../util.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-// const test = require('@pre-bundled/tape')
-// const fs = require('fs')
-// const path = require('path')
-// const childProcess = require('child_process')
-// const util = require('util')
-// const jsdiff = require('diff')
-
-// const { strip } = require('../util')
-
 const dir = path.join(__dirname, 'fixtures')
 const files = readdirSync(dir)
 const JS_FILES = files.filter(f => f.endsWith('.js'))
