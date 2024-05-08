@@ -6,7 +6,7 @@ file://$TAPE/index.js:$LINE
                         ^
 
 Error: Oh no!
-    at Test._ [as fn] (file://$TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
+    at Test.fn (file://$TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
     at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
