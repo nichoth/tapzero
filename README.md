@@ -1,6 +1,5 @@
 # tapzero
 ![tests](https://github.com/bicycle-codes/tapzero/actions/workflows/nodejs.yml/badge.svg)
-[![Socket Badge](https://socket.dev/api/badge/npm/package/@bicycle-codes/tapzero)](https://socket.dev/npm/package/@bicycle-codes/tapzero)
 [![module](https://img.shields.io/badge/module-ESM%2FCJS-blue?style=flat-square)](README.md)
 [![dependencies](https://img.shields.io/badge/dependencies-zero-brightgreen.svg?style=flat-square)](package.json)
 [![type-coverage](https://img.shields.io/badge/dynamic/json.svg?style=flat-square&label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fbicycle-codes%2Ftapzero%2Ffork%2Fpackage.json)](https://github.com/bicycle-codes/tapzero)
