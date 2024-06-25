@@ -175,9 +175,9 @@ export class Test {
    * @param {Function} fn
    * @param {RegExp | any} [expected]
    * @param {string} [message]
-   * @returns {void}
+   * @returns {Promise<void>}
    */
-  throws (fn, expected, message) {
+  async throws (fn, expected, message) {
     if (typeof expected === 'string') {
       message = expected
       expected = undefined
@@ -188,7 +188,7 @@ export class Test {
     /** @type {Error | undefined} */
     let caught = undefined
     try {
-      fn()
+      await fn()
     } catch (err) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       caught = /** @type {Error} */ (err)
@@ -202,9 +202,7 @@ export class Test {
       throw new Error(`t.throws() not implemented for expected: ${typeof expected}`)
     }
 
-    this._assert(
-      pass, caught, expected, message || 'should throw', 'throws'
-    )
+    this._assert(pass, caught, expected, message || 'should throw', 'throws')
   }
 
   /**
