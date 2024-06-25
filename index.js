@@ -203,7 +203,7 @@ export class Test {
     }
 
     this._assert(
-      pass, caught, expected, message || 'show throw', 'throws'
+      pass, caught, expected, message || 'should throw', 'throws'
     )
   }
 
