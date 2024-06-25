@@ -185,8 +185,8 @@ export class Test {
 
     if (this.strict && !message) throw new Error('tapzero msg required')
 
-    /** @type {Error | null} */
-    let caught = null
+    /** @type {Error | undefined} */
+    let caught = undefined
     try {
       fn()
     } catch (err) {
