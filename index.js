@@ -114,7 +114,9 @@ export class Test {
     if (this.strict && !msg) throw new Error('tapzero msg required')
     this._assert(
       // eslint-disable-next-line eqeqeq
-      actual == expected, actual, expected,
+      actual == expected,
+      actual,
+      expected,
       msg || 'should be equal',
       'equal'
     )
