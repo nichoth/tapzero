@@ -115,7 +115,8 @@ export class Test {
     this._assert(
       // eslint-disable-next-line eqeqeq
       actual == expected, actual, expected,
-      msg || 'should be equal', 'equal'
+      msg || 'should be equal',
+      'equal'
     )
   }
 
