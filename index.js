@@ -19,7 +19,7 @@ const AT_REGEX = new RegExp(
 let CACHED_FILE
 
 /**
- * @typedef {(t: Test) => (void | Promise<void>)} TestFn
+ * @typedef {(t: Test) => (void | Promise<any>)} TestFn
  */
 
 /**
