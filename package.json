@@ -1,5 +1,5 @@
 {
-  "name": "@bicycle-codes/tapzero",
+  "name": "@substrate-system/tapzero",
   "version": "0.10.5",
   "description": "Smallest test library",
   "main": "dist/index.js",
@@ -71,10 +71,10 @@
     ]
   },
   "author": "Raynos <raynos2@gmail.com>",
-  "repository": "git://github.com/bicycle-codes/tapzero.git",
-  "homepage": "https://github.com/bicycle-codes/tapzero",
+  "repository": "git://github.com/substrate-system/tapzero.git",
+  "homepage": "https://github.com/substrate-system/tapzero",
   "bugs": {
-    "url": "https://github.com/bicycle-codes/tapzero/issues",
+    "url": "https://github.com/substrate-system/tapzero/issues",
     "email": "nichoth@nichoth.com"
   },
   "contributors": [
@@ -91,7 +91,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/bicycle-codes/tapzero/raw/master/LICENSE"
+      "url": "http://github.com/substrate-system/tapzero/raw/master/LICENSE"
     }
   ]
 }
