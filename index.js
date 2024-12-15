@@ -232,7 +232,7 @@ export class Test {
       // then check if we are done
       if (this._actual === this._planned) {
         this.done = true
-        return this._resolve()
+        // return this._resolve()
       }
 
       // if (this._actual > this._planned) {
@@ -312,13 +312,8 @@ export class Test {
         return maybeP.then(resolve)
       } else {
         // if it's not a promise,
-        // and there is no plan, then resolve right away
-        // otherwise, let `_assert` resolve the promise
-        if (!this._planned) {
-          return resolve()
-        } else {
-          // do nothing, _assert will handle it
-        }
+        // then resolve right away if there is no plan
+        return resolve()
       }
     })
 
