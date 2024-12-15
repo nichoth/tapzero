@@ -43,6 +43,8 @@ export class Test {
     this.fn = fn
     /** @type {TestRunner} */
     this.runner = runner
+    /** @type {Promise<void>} */
+    this.promise = Promise.resolve()
     /** @type {{ pass: number, fail: number }} */
     this._result = {
       pass: 0,
@@ -229,6 +231,11 @@ export class Test {
     if (this._planned !== null) {
       this._actual = ((this._actual || 0) + 1)
 
+      if (this._actual === this._planned) {
+        this.done = true
+        this._resolve()
+      }
+
       if (this._actual > this._planned) {
         throw new Error(`More tests than planned in TEST *${this.name}*`)
       }
@@ -291,10 +298,17 @@ export class Test {
    */
   async run () {
     this.runner.report('# ' + this.name)
-    const maybeP = this.fn(this)
-    if (maybeP && typeof maybeP.then === 'function') {
-      await maybeP
-    }
+    const newPromise = new Promise(resolve => {  /** @type {Promise<void>} */
+      this._resolve = resolve
+      const maybeP = this.fn(this)
+      if (maybeP && typeof maybeP.then === 'function') {
+        maybeP.then(resolve)
+      } else {
+        resolve()
+      }
+    })
+
+    await newPromise
 
     this.done = true
 
