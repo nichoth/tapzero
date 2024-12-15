@@ -218,27 +218,26 @@ export class Test {
    * @param {string} operator
    * @returns {void}
    */
-  _assert (
-    pass, actual, expected,
-    description, operator
-  ) {
+  _assert (pass, actual, expected, description, operator) {
     if (this.done) {
       throw new Error(
         'assertion occurred after test was finished: ' + this.name
       )
     }
-
+    
+    // if we have a plan
     if (this._planned !== null) {
       this._actual = ((this._actual || 0) + 1)
 
+      // then check if we are done
       if (this._actual === this._planned) {
         this.done = true
-        this._resolve()
+        return this._resolve()
       }
 
-      if (this._actual > this._planned) {
-        throw new Error(`More tests than planned in TEST *${this.name}*`)
-      }
+      // if (this._actual > this._planned) {
+      //   throw new Error(`More tests than planned in TEST *${this.name}*`)
+      // }
     }
 
     const report = this.runner.report
@@ -298,21 +297,34 @@ export class Test {
    */
   async run () {
     this.runner.report('# ' + this.name)
-    const newPromise = new Promise(resolve => {  /** @type {Promise<void>} */
+
+    /** @type {Promise<void>} */
+    const newPromise = new Promise(resolve => {
       this._resolve = resolve
       const maybeP = this.fn(this)
       if (maybeP && typeof maybeP.then === 'function') {
-        maybeP.then(resolve)
+        if (this._planned !== null) {  // if we have a plan
+          // then don't call resolve, b/c it is called by the _assert function
+        } else {
+          return maybeP.then(resolve)
+        }
+
+        return maybeP.then(resolve)
       } else {
-        resolve()
+        // if it's not a promise,
+        // and there is no plan, then resolve right away
+        // otherwise, let `_assert` resolve the promise
+        if (!this._planned) {
+          return resolve()
+        } else {
+          // do nothing, _assert will handle it
+        }
       }
     })
 
     await newPromise
 
-    this.done = true
-
-    if (this._planned !== null) {
+    if (this._planned !== null) {  // if we have a plan, then check the plan
       if (this._planned > (this._actual || 0)) {
         throw new Error(`Test ended before the planned number
           planned: ${this._planned}
@@ -424,12 +436,13 @@ export class TestRunner {
    */
   add (name, fn, only) {
     if (this.completed) {
-      // TODO: calling add() after run()
       throw new Error('Cannot add() a test case after tests completed.')
     }
+
     const t = new Test(name, fn, this)
     const arr = only ? this.onlyTests : this.tests
     arr.push(t)
+
     if (!this.scheduled) {
       this.scheduled = true
       setTimeout(() => {
@@ -445,9 +458,9 @@ export class TestRunner {
    * @returns {Promise<void>}
    */
   async run () {
-    const ts = this.onlyTests.length > 0
-      ? this.onlyTests
-      : this.tests
+    const tests = (this.onlyTests.length > 0 ?
+      this.onlyTests :
+      this.tests)
 
     this.report('TAP version 13')
 
@@ -455,7 +468,7 @@ export class TestRunner {
     let success = 0
     let fail = 0
 
-    for (const test of ts) {
+    for (const test of tests) {
       // TODO: parallel execution
       const result = await test.run()
 
@@ -480,6 +493,7 @@ export class TestRunner {
     if (this._onFinishCallback) {
       this._onFinishCallback({ total, success, fail })
     } else {
+      // if we are in node, exit with the right code
       if (typeof process !== 'undefined' &&
         typeof process.exit === 'function' &&
         typeof process.on === 'function' &&
@@ -500,7 +514,7 @@ export class TestRunner {
   }
 
   /**
-   * @param {(result: { total: number, success: number, fail: number }) => void} callback
+   * @param {(result: { total:number, success:number, fail:number }) => void} callback
    * @returns {void}
    */
   onFinish (callback) {

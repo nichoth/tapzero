@@ -4,7 +4,7 @@
     "module": "NodeNext",
     "outDir": "dist",
     "noImplicitAny": false,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "nodenext",
     "baseUrl": "./",
     "paths": {
       "@pre-bundled/tape": ["./_types/pre-bundled__tape"],

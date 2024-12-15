@@ -26,7 +26,7 @@ for (const file of JS_FILES) {
 
       const shouldErr = file.endsWith('_fail.js')
       t.equal(info.exitCode, shouldErr ? 1 : 0,
-        'should exit with ' + (shouldErr ? '1' : '0'))
+        'should exit with code ' + (shouldErr ? '1' : '0'))
 
       const stripped = strip(info.combined)
 

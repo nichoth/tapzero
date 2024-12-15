@@ -7,6 +7,8 @@ file://$TAPE/index.js:$LINE
 
 Error: Oh no!
     at Test.fn (file://$TEST/zora/fixtures/bailout_fail.js:$LINE:$COL)
+    at file://$TAPE/index.js:$LINE:$COL
+    at new Promise (<anonymous>)
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
     at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
