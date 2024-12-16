@@ -15,25 +15,25 @@ const startBigInt = process.hrtime.bigint()
 const knownDeltas = []
 
 bench.add('Date.now()', () => {
-  const curr = Date.now()
+    const curr = Date.now()
 
-  knownDeltas[0] = curr - startDate
+    knownDeltas[0] = curr - startDate
 })
 
 bench.add('Performance.now()', () => {
-  const curr = performance.now()
+    const curr = performance.now()
 
-  knownDeltas[0] = curr - startPerf
+    knownDeltas[0] = curr - startPerf
 })
 
 bench.add('process.hrtime(start)', () => {
-  knownDeltas[0] = process.hrtime(startHr)
+    knownDeltas[0] = process.hrtime(startHr)
 })
 
 bench.add('process.hrtime().bigint()', () => {
-  const curr = process.hrtime.bigint()
+    const curr = process.hrtime.bigint()
 
-  knownDeltas[0] = curr - startBigInt
+    knownDeltas[0] = curr - startBigInt
 })
 
 bench.run()

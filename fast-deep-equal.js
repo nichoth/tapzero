@@ -4,8 +4,6 @@
 
 // do not edit .js files directly - edit src/index.jst
 
-
-
 export function equal(a, b) {
   if (a === b) return true;
 
@@ -46,3 +44,5 @@ export function equal(a, b) {
   // true if both NaN, false otherwise
   return a!==a && b!==b;
 };
+
+export default equal
