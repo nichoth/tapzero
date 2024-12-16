@@ -2,10 +2,6 @@
 // @ts-nocheck
 'use strict';
 
-// do not edit .js files directly - edit src/index.jst
-
-
-
 export function equal(a, b) {
   if (a === b) return true;
 

@@ -8,8 +8,8 @@ ok 1 assert1
 
 # ok
 file://$TAPE/index.js:$LINE
-      throw new Error('Cannot add() a test case after tests completed.')
-      ^
+            throw new Error('Cannot add() a test case after tests completed.')
+            ^
 
 Error: Cannot add() a test case after tests completed.
     at TestRunner.add (file://$TAPE/index.js:$LINE:$COL)
@@ -17,3 +17,4 @@ Error: Cannot add() a test case after tests completed.
     at Timeout._onTimeout (file://$TEST/zora/fixtures/adding_test_cases_async_fail.js:$LINE:$COL)
     at listOnTimeout (node:internal/timers:$LINE:$COL)
     at process.processTimers (node:internal/timers:$LINE:$COL)
+    

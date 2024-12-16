@@ -1,7 +1,3 @@
-'use strict'
-
-// @ts-check
-
 import { equal as deepEqual } from './fast-deep-equal.js'
 
 const NEW_LINE_REGEX = /\n/g
@@ -19,7 +15,7 @@ const AT_REGEX = new RegExp(
 let CACHED_FILE
 
 /**
- * @typedef {(t: Test) => (void | Promise<any>)} TestFn
+ * @typedef {(t:Test) => (void|Promise<any>)} TestFn
  */
 
 /**
@@ -27,13 +23,13 @@ let CACHED_FILE
  */
 export class Test {
     /**
-   * @constructor
-   * @param {string} name
-   * @param {TestFn} fn
-   * @param {TestRunner} runner
-   */
+     * @constructor
+     * @param {string} name
+     * @param {TestFn} fn
+     * @param {TestRunner} runner
+     */
     constructor (name, fn, runner) {
-    /** @type {string} */
+        /** @type {string} */
         this.name = name
         /** @type {null|number} */
         this._planned = null
@@ -43,6 +39,8 @@ export class Test {
         this.fn = fn
         /** @type {TestRunner} */
         this.runner = runner
+        /** @type {Promise<void>} */
+        this.promise = Promise.resolve()
         /** @type {{ pass: number, fail: number }} */
         this._result = {
             pass: 0,
@@ -56,30 +54,79 @@ export class Test {
     }
 
     /**
-   * @param {string} msg
-   * @returns {void}
-   */
+     * @returns {Promise<{
+     *   pass: number,
+     *   fail: number
+     * }>}
+     */
+    async run () {
+        this.runner.report('# ' + this.name)
+
+        /** @type {Promise<void>} */
+        const newPromise = new Promise(resolve => {
+            this._resolve = resolve
+            const maybeP = this.fn(this)
+            if (maybeP && typeof maybeP.then === 'function') {
+                if (this._planned !== null) {  // if we have a plan
+                    // then don't call resolve, b/c it is called by the _assert function
+                } else {
+                    return maybeP.then(resolve)
+                }
+
+                return maybeP.then(resolve)
+            } else {
+                // if it's not a promise,
+                // then resolve right away if there is no plan
+                if (this._planned !== null) {
+                    // dont resolve
+                } else {
+                    return resolve()
+                }
+            }
+        })
+
+        await newPromise
+
+        console.log('hey thereeeeeeeeeeeeeeeee', this._planned, this._actual)
+
+        if (this._planned !== null) {  // if we have a plan, then check the plan
+            if (this._planned > (this._actual || 0)) {
+                throw new Error(`Test ended before the planned number
+             planned: ${this._planned}
+             actual: ${this._actual || 0}
+             `
+                )
+            }
+        }
+
+        return this._result
+    }
+
+    /**
+     * @param {string} msg
+     * @returns {void}
+     */
     comment (msg) {
         this.runner.report('# ' + msg)
     }
 
     /**
-   * Plan the number of assertions.
-   *
-   * @param {number} n
-   * @returns {void}
-   */
+     * Plan the number of assertions.
+     *
+     * @param {number} n
+     * @returns {void}
+     */
     plan (n) {
         this._planned = n
     }
 
     /**
-   * @template T
-   * @param {T} actual
-   * @param {T} expected
-   * @param {string} [msg]
-   * @returns {void}
-   */
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     * @returns {void}
+     */
     deepEqual (actual, expected, msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -89,12 +136,12 @@ export class Test {
     }
 
     /**
-   * @template T
-   * @param {T} actual
-   * @param {T} expected
-   * @param {string} [msg]
-   * @returns {void}
-   */
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     * @returns {void}
+     */
     notDeepEqual (actual, expected, msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -104,12 +151,12 @@ export class Test {
     }
 
     /**
-   * @template T
-   * @param {T} actual
-   * @param {T} expected
-   * @param {string} [msg]
-   * @returns {void}
-   */
+     * @template T
+     * @param {T} actual
+     * @param {T} expected
+     * @param {string} [msg]
+     * @returns {void}
+     */
     equal (actual, expected, msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -123,11 +170,11 @@ export class Test {
     }
 
     /**
-   * @param {unknown} actual
-   * @param {unknown} expected
-   * @param {string} [msg]
-   * @returns {void}
-   */
+     * @param {unknown} actual
+     * @param {unknown} expected
+     * @param {string} [msg]
+     * @returns {void}
+     */
     notEqual (actual, expected, msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -138,9 +185,9 @@ export class Test {
     }
 
     /**
-   * @param {string} [msg]
-   * @returns {void}
-   */
+     * @param {string} [msg]
+     * @returns {void}
+     */
     fail (msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -163,10 +210,10 @@ export class Test {
     }
 
     /**
-   * @param {Error | null | undefined} err
-   * @param {string} [msg]
-   * @returns {void}
-   */
+       * @param {Error | null | undefined} err
+       * @param {string} [msg]
+       * @returns {void}
+       */
     ifError (err, msg) {
         if (this.strict && !msg) throw new Error('tapzero msg required')
         this._assert(
@@ -175,11 +222,11 @@ export class Test {
     }
 
     /**
-   * @param {Function} fn
-   * @param {RegExp | any} [expected]
-   * @param {string} [message]
-   * @returns {Promise<void>}
-   */
+       * @param {Function} fn
+       * @param {RegExp | any} [expected]
+       * @param {string} [message]
+       * @returns {Promise<void>}
+       */
     async throws (fn, expected, message) {
         if (typeof expected === 'string') {
             message = expected
@@ -208,29 +255,36 @@ export class Test {
     }
 
     /**
-   * @param {boolean} pass
-   * @param {unknown} actual
-   * @param {unknown} expected
-   * @param {string} description
-   * @param {string} operator
-   * @returns {void}
-   */
-    _assert (
-        pass, actual, expected,
-        description, operator
-    ) {
+     * @param {boolean} pass
+     * @param {unknown} actual
+     * @param {unknown} expected
+     * @param {string} description
+     * @param {string} operator
+     * @returns {void}
+     */
+    _assert (pass, actual, expected, description, operator) {
         if (this.done) {
             throw new Error(
                 'assertion occurred after test was finished: ' + this.name
             )
         }
 
+        // if we have a plan
         if (this._planned !== null) {
             this._actual = ((this._actual || 0) + 1)
 
-            if (this._actual > this._planned) {
-                throw new Error(`More tests than planned in TEST *${this.name}*`)
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', this._planned, this._actual)
+
+            // then check if we are done
+            if (this._actual === this._planned) {
+                console.log('all doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+                this.done = true
+                return (this._resolve && this._resolve())
             }
+
+            // if (this._actual > this._planned) {
+            //   throw new Error(`More tests than planned in TEST *${this.name}*`)
+            // }
         }
 
         const report = this.runner.report
@@ -281,87 +335,6 @@ export class Test {
 
         report('  ...')
     }
-
-    /**
-   * @returns {Promise<{
-   *   pass: number,
-   *   fail: number
-   * }>}
-   */
-    async run () {
-        this.runner.report('# ' + this.name)
-        const maybeP = this.fn(this)
-        if (maybeP && typeof maybeP.then === 'function') {
-            await maybeP
-        }
-
-        this.done = true
-
-        if (this._planned !== null) {
-            if (this._planned > (this._actual || 0)) {
-                throw new Error(`Test ended before the planned number
-          planned: ${this._planned}
-          actual: ${this._actual || 0}
-          `
-                )
-            }
-        }
-
-        return this._result
-    }
-}
-
-/**
- * @returns {string}
- */
-function getTapZeroFileName () {
-    if (CACHED_FILE) return CACHED_FILE
-
-    const e = new Error('temp')
-    const lines = (e.stack || '').split('\n')
-
-    for (const line of lines) {
-        const m = AT_REGEX.exec(line)
-        if (!m) {
-            continue
-        }
-
-        let fileName = m[2]
-        if (m[4] && fileName.endsWith(`:${m[4]}`)) {
-            fileName = fileName.slice(0, fileName.length - m[4].length - 1)
-        }
-        if (m[3] && fileName.endsWith(`:${m[3]}`)) {
-            fileName = fileName.slice(0, fileName.length - m[3].length - 1)
-        }
-
-        CACHED_FILE = fileName
-        break
-    }
-
-    return CACHED_FILE || ''
-}
-
-/**
- * @param {Error} e
- * @returns {string}
- */
-function findAtLineFromError (e) {
-    const lines = (e.stack || '').split('\n')
-    const dir = getTapZeroFileName()
-
-    for (const line of lines) {
-        const m = AT_REGEX.exec(line)
-        if (!m) {
-            continue
-        }
-
-        if (m[2].slice(0, dir.length) === dir) {
-            continue
-        }
-
-        return `${m[1] || '<anonymous>'} (${m[2]})`
-    }
-    return ''
 }
 
 /**
@@ -373,7 +346,7 @@ export class TestRunner {
    * @param {(lines: string) => void} [report]
    */
     constructor (report) {
-    /** @type {(lines: string) => void} */
+        /** @type {(lines: string) => void} */
         this.report = report || printLine
 
         /** @type {Test[]} */
@@ -409,12 +382,13 @@ export class TestRunner {
    */
     add (name, fn, only) {
         if (this.completed) {
-            // TODO: calling add() after run()
             throw new Error('Cannot add() a test case after tests completed.')
         }
+
         const t = new Test(name, fn, this)
         const arr = only ? this.onlyTests : this.tests
         arr.push(t)
+
         if (!this.scheduled) {
             this.scheduled = true
             setTimeout(() => {
@@ -430,9 +404,9 @@ export class TestRunner {
    * @returns {Promise<void>}
    */
     async run () {
-        const ts = this.onlyTests.length > 0
-            ? this.onlyTests
-            : this.tests
+        const tests = (this.onlyTests.length > 0 ?
+            this.onlyTests :
+            this.tests)
 
         this.report('TAP version 13')
 
@@ -440,7 +414,7 @@ export class TestRunner {
         let success = 0
         let fail = 0
 
-        for (const test of ts) {
+        for (const test of tests) {
             // TODO: parallel execution
             const result = await test.run()
 
@@ -465,6 +439,7 @@ export class TestRunner {
         if (this._onFinishCallback) {
             this._onFinishCallback({ total, success, fail })
         } else {
+            // if we are in node, exit with the right code
             if (typeof process !== 'undefined' &&
         typeof process.exit === 'function' &&
         typeof process.on === 'function' &&
@@ -485,7 +460,7 @@ export class TestRunner {
     }
 
     /**
-   * @param {(result: { total: number, success: number, fail: number }) => void} callback
+   * @param {(result: { total:number, success:number, fail:number }) => void} callback
    * @returns {void}
    */
     onFinish (callback) {
@@ -502,51 +477,6 @@ export class TestRunner {
 function printLine (line) {
     console.log(line)
 }
-
-export const GLOBAL_TEST_RUNNER = new TestRunner()
-
-/**
- * @param {string} name
- * @param {TestFn} [fn]
- * @returns {void}
- */
-export function only (name, fn) {
-    if (!fn) return
-    GLOBAL_TEST_RUNNER.add(name, fn, true)
-}
-
-/**
- * @param {string} _name
- * @param {TestFn} [_fn]
- * @returns {void}
- */
-export function skip (_name, _fn) {}
-
-/**
- * @param {boolean} strict
- * @returns {void}
- */
-export function setStrict (strict) {
-    GLOBAL_TEST_RUNNER.strict = strict
-}
-
-/**
- * @type {{
- *    (name: string, fn?: TestFn): void
- *    only(name: string, fn?: TestFn): void
- *    skip(name: string, fn?: TestFn): void
- * }}
- *
- * @param {string} name
- * @param {TestFn} [fn]
- * @returns {void}
- */
-export function test (name, fn) {
-    if (!fn) return
-    GLOBAL_TEST_RUNNER.add(name, fn, false)
-}
-test.only = only
-test.skip = skip
 
 /**
  * @param {Error} err
@@ -574,4 +504,57 @@ function toJSON (thing) {
 
     const json = JSON.stringify(thing, replacer, '  ') || 'undefined'
     return json.replace(/"_tz_undefined_tz_"/g, 'undefined')
+}
+
+/**
+ * @param {Error} err
+ * @returns {string}
+ */
+function findAtLineFromError (err) {
+    const lines = (err.stack || '').split('\n')
+    const dir = getTapZeroFileName()
+
+    for (const line of lines) {
+        const m = AT_REGEX.exec(line)
+        if (!m) {
+            continue
+        }
+
+        if (m[2].slice(0, dir.length) === dir) {
+            continue
+        }
+
+        return `${m[1] || '<anonymous>'} (${m[2]})`
+    }
+    return ''
+}
+
+/**
+ * @returns {string}
+ */
+function getTapZeroFileName () {
+    if (CACHED_FILE) return CACHED_FILE
+
+    const e = new Error('temp')
+    const lines = (e.stack || '').split('\n')
+
+    for (const line of lines) {
+        const m = AT_REGEX.exec(line)
+        if (!m) {
+            continue
+        }
+
+        let fileName = m[2]
+        if (m[4] && fileName.endsWith(`:${m[4]}`)) {
+            fileName = fileName.slice(0, fileName.length - m[4].length - 1)
+        }
+        if (m[3] && fileName.endsWith(`:${m[3]}`)) {
+            fileName = fileName.slice(0, fileName.length - m[3].length - 1)
+        }
+
+        CACHED_FILE = fileName
+        break
+    }
+
+    return CACHED_FILE || ''
 }

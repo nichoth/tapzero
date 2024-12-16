@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "lint": "eslint \"./**/*.{ts,js}\"",
     "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-types",
     "build-cjs": "esbuild ./index.js --bundle --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs",
     "build-esm": "esbuild index.js --bundle --format=esm --keep-names --outdir=./dist",
@@ -52,9 +53,13 @@
   "devDependencies": {
     "@pre-bundled/tape": "4.11.0",
     "@types/node": "13.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
     "auto-changelog": "^2.4.0",
     "diff": "5.2.0",
     "esbuild": "^0.20.1",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
     "fast-deep-equal": "3.1.1",
     "npm-bin-deps": "1.10.1",
     "tiny-benchy": "1.0.1",
