@@ -1,8 +1,6 @@
 'use strict'
-
 // @ts-check
 
-// const path = require('path')
 import path from 'path'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -11,10 +9,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const NUMBER_LINE = /^1\.\.\d+$/
 const FAIL_LINE = /^# fail[ ]{2}\d+$/
-
-// exports.collect = collect
-// exports.strip = strip
-// exports.trimPrefix = trimPrefix
 
 /**
  * @param {(a: string) => void} fn
