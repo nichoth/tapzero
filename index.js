@@ -37,8 +37,12 @@ export class Test {
     this.name = name
     /** @type {null|number} */
     this._planned = null
-    /** @type {null|number} */
-    this._actual = null
+    /** @type {undefined|ReturnType<typeof setTimeout>} */
+    this._timeout
+    /** @type {number} */
+    this.waitFor = 3000  // the default timeout
+    /** @type {number} */
+    this._actual = 0
     /** @type {TestFn} */
     this.fn = fn
     /** @type {TestRunner} */
@@ -67,10 +71,19 @@ export class Test {
    * Plan the number of assertions.
    *
    * @param {number} n
-   * @returns {void}
+   * @return {Promise<void>}
    */
   plan (n) {
     this._planned = n
+
+    return new Promise(resolve => {
+      this._waitLoop()
+
+      this._resolve = () => {
+        this._clearTimeout()
+        resolve()
+      }
+    })
   }
 
   /**
@@ -226,12 +239,14 @@ export class Test {
       )
     }
 
-    if (this._planned !== null) {
-      this._actual = ((this._actual || 0) + 1)
+    this._actual++
 
-      if (this._actual > this._planned) {
-        throw new Error(`More tests than planned in TEST *${this.name}*`)
-      }
+    if (this._planned !== null && this._actual > this._planned) {
+      throw new Error(`More tests than planned in TEST *${this.name}*`)
+    }
+
+    if (this._actual === this._planned) {
+      this._resolve && this._resolve()
     }
 
     const report = this.runner.report
@@ -244,6 +259,8 @@ export class Test {
       this._result.pass++
       return
     }
+
+    // fail
 
     const atErr = new Error(description)
     let err = atErr
@@ -281,6 +298,21 @@ export class Test {
     }
 
     report('  ...')
+  }
+
+  // b/c node will exit even if our promise has not resolved yet
+  _waitLoop () {
+    this._timeout = setTimeout(() => {
+      this._waitLoop()
+    }, 100 * 1000)
+
+    setTimeout(() => {  // timeout for tests
+      this._resolve && this._resolve()
+    }, this.waitFor)
+  }
+
+  _clearTimeout () {
+    clearTimeout(this._timeout)
   }
 
   /**
