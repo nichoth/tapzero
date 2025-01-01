@@ -40,7 +40,7 @@ export class Test {
     /** @type {undefined|ReturnType<typeof setTimeout>} */
     this._timeout
     /** @type {number} */
-    this.TIMEOUT_MS = 3000  // the default timeout
+    this.TIMEOUT_MS = 5000  // the default timeout
     /** @type {boolean} */
     this._timedOut = false
     /** @type {number} */

@@ -12,11 +12,16 @@ Zero dependency test framework
 
 A fork of [raynos/tapzero](https://github.com/raynos/tapzero)
 
+<details><summary><h2>Contents</h2></summary>
+<!-- toc -->
+</details>
+
 ## Source code
 
 The implementation is <250 loc, (<500 with comments) ( https://github.com/substrate-system/tapzero/blob/fork/index.js ) and very readable.
 
 ## install
+
 ```sh
 npm i -D @substrate-system/tapzero
 ```
@@ -42,7 +47,8 @@ test('my test', (t) => {
 })
 ```
 
-### End automatically
+## End automatically
+
 Return a promise. The test will end when the promise resolves.
 
 ```js
@@ -58,7 +64,10 @@ tapzero('my cb test', async (t) => {
 })
 ```
 
-### Plan the number of assertions
+## Plan
+
+Plan the number of assertions.
+
 ```js
 tapzero('planning example', t => {
   // this test will fail if we execute more or fewer
@@ -68,6 +77,33 @@ tapzero('planning example', t => {
   t.equal(2, 2, 'two is two')
 })
 ```
+
+### Async + planning
+
+Return `t.plan()`, and then the test will automatically wait until the right
+number of assertions have been made. By default this will time out after 5 seconds.
+
+>
+> [!NOTE]  
+> The default timeout is 5 seconds.
+>
+
+```js
+test('Timeout before all the tests', t => {
+  setTimeout(() => {
+      t.ok(true)
+  }, 2000)  // default timeout is 5 seconds
+
+  t.ok(true)
+  t.ok(true)
+
+  // note return
+  return t.plan(3)
+})
+```
+
+#### set a different timeout value
+You can pass in a different number value to `.plan`, in milliseconds.
 
 ## API
 No aliases, smaller API surface area
