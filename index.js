@@ -40,7 +40,9 @@ export class Test {
     /** @type {undefined|ReturnType<typeof setTimeout>} */
     this._timeout
     /** @type {number} */
-    this.waitFor = 3000  // the default timeout
+    this.TIMEOUT_MS = 3000  // the default timeout
+    /** @type {boolean} */
+    this._timedOut = false
     /** @type {number} */
     this._actual = 0
     /** @type {TestFn} */
@@ -71,10 +73,15 @@ export class Test {
    * Plan the number of assertions.
    *
    * @param {number} n
+   * @param {number} [timeoutMS]
    * @return {Promise<void>}
    */
-  plan (n) {
+  plan (n, timeoutMS) {
     this._planned = n
+
+    if (timeoutMS) {
+      this.TIMEOUT_MS = timeoutMS
+    }
 
     return new Promise(resolve => {
       this._waitLoop()
@@ -307,8 +314,9 @@ export class Test {
     }, 100 * 1000)
 
     setTimeout(() => {  // timeout for tests
+      this._timedOut = true
       this._resolve && this._resolve()
-    }, this.waitFor)
+    }, this.TIMEOUT_MS)
   }
 
   _clearTimeout () {
@@ -332,11 +340,17 @@ export class Test {
 
     if (this._planned !== null) {
       if (this._planned > (this._actual || 0)) {
+        if (this._timedOut) {
+          throw new Error(`Test timed out after ${this.TIMEOUT_MS} ms
+            planned: ${this._planned}
+            actual: ${this._actual || 0}
+          `)
+        }
+
         throw new Error(`Test ended before the planned number
           planned: ${this._planned}
           actual: ${this._actual || 0}
-          `
-        )
+        `)
       }
     }
 

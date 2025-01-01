@@ -1,5 +1,5 @@
 TAP version 13
-# Return .plan, don't execute enough tests
+# Timeout before the planned number
 ok 1 should be truthy
 ok 2 should be truthy
 file://$TAPE/index.js:$LINE
