@@ -13,7 +13,37 @@ Zero dependency test framework
 A fork of [raynos/tapzero](https://github.com/raynos/tapzero)
 
 <details><summary><h2>Contents</h2></summary>
+
 <!-- toc -->
+
+- [Source code](#source-code)
+- [install](#install)
+- [Migrating from tape](#migrating-from-tape)
+- [End automatically](#end-automatically)
+- [Plan](#plan)
+  * [Async + planning](#async--planning)
+    + [set a different timeout value](#set-a-different-timeout-value)
+- [API](#api)
+  * [`test(name, [fn])`](#testname-fn)
+  * [`test.only(name, fn)`](#testonlyname-fn)
+  * [`test.skip(name, [fn])`](#testskipname-fn)
+  * [`t.deepEqual (actual, expected, msg)`](#tdeepequal-actual-expected-msg)
+  * [`t.notDeepEqual (actual, expected, msg)`](#tnotdeepequal-actual-expected-msg)
+  * [`t.equal (actual, expected, msg)`](#tequal-actual-expected-msg)
+  * [`t.notEqual (actual, expected, msg)`](#tnotequal-actual-expected-msg)
+  * [`t.fail (msg)`](#tfail-msg)
+  * [`t.ok (value, msg)`](#tok-value-msg)
+  * [`t.throws (fn, expected, message)`](#tthrows-fn-expected-message)
+- [Motivation](#motivation)
+  * [Zero dependencies](#zero-dependencies)
+  * [Small install size](#small-install-size)
+- [develop](#develop)
+  * [Run the tests](#run-the-tests)
+  * [Check type coverage](#check-type-coverage)
+  * [visual type report](#visual-type-report)
+
+<!-- tocstop -->
+
 </details>
 
 ## Source code
