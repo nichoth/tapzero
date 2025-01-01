@@ -3,7 +3,7 @@ import { test } from '../../../index.js'
 test('Timeout before the planned number', t => {
     setTimeout(() => {
         t.ok(true)
-    }, 4000)  // default timeout is 3 seconds
+    }, 6000)  // default timeout is 5 seconds
 
     t.ok(true)
     t.ok(true)
