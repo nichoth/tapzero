@@ -1,0 +1,15 @@
+TAP version 13
+# Timeout before the planned number
+ok 1 should be truthy
+ok 2 should be truthy
+file://$TAPE/index.js:$LINE
+  function rethrow () { throw err }
+                        ^
+
+Error: Test timed out after 5000 ms
+            planned: 3
+            actual: 2
+          
+    at Test.run (file://$TAPE/index.js:$LINE:$COL)
+    at async TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+    

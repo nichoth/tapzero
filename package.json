@@ -4,20 +4,6 @@
   "description": "Smallest test library",
   "main": "dist/index.js",
   "type": "module",
-  "scripts": {
-    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-types",
-    "build-cjs": "esbuild ./index.js --bundle --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs",
-    "build-esm": "esbuild index.js --bundle --format=esm --keep-names --outdir=./dist",
-    "test": "npm run build && node ./test/index.js | tap-arc",
-    "build-types": "tsc ./index.js --declaration --emitDeclarationOnly --allowJs --outDir dist",
-    "coverage": "type-coverage",
-    "report": "typescript-coverage-report && open coverage-ts/index.html",
-    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js",
-    "preversion": "npm run coverage",
-    "version": "auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md",
-    "postversion": "git push --follow-tags && npm publish",
-    "prepublishOnly": "npm run build"
-  },
   "files": [
     "./dist/*"
   ],
@@ -36,6 +22,21 @@
         "./dist/*"
       ]
     }
+  },
+  "scripts": {
+    "build": "mkdir -p ./dist && rm -rf ./dist/* && npm run build-cjs && npm run build-esm && npm run build-types",
+    "build-cjs": "esbuild ./index.js --bundle --format=cjs --keep-names --outdir=./dist --out-extension:.js=.cjs",
+    "build-esm": "esbuild index.js --bundle --format=esm --keep-names --outdir=./dist",
+    "test": "npm run build && node ./test/index.js",
+    "build-types": "tsc ./index.js --declaration --emitDeclarationOnly --allowJs --outDir dist",
+    "coverage": "type-coverage",
+    "report": "typescript-coverage-report && open coverage-ts/index.html",
+    "vendor": "cp node_modules/fast-deep-equal/index.js ./fast-deep-equal.js; sed -i '1s;^;// Copied from fast-deep-equal@3.1.1.\\n// @ts-nocheck\\n;' fast-deep-equal.js",
+    "toc": "markdown-toc --maxdepth 4 -i README.md",
+    "preversion": "npm run coverage",
+    "version": "npm run toc && auto-changelog -p --template keepachangelog --breaking-pattern 'BREAKING CHANGE:' && git add CHANGELOG.md README.md",
+    "postversion": "git push --follow-tags && npm publish",
+    "prepublishOnly": "npm run build"
   },
   "typeCoverage": {
     "atLeast": 98,
@@ -56,6 +57,7 @@
     "diff": "5.2.0",
     "esbuild": "^0.20.1",
     "fast-deep-equal": "3.1.1",
+    "markdown-toc": "^1.2.0",
     "npm-bin-deps": "1.10.1",
     "tap-arc": "^1.2.2",
     "tiny-benchy": "1.0.1",

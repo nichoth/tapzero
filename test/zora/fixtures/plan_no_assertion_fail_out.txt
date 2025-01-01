@@ -7,7 +7,7 @@ file://$TAPE/index.js:$LINE
 Error: Test ended before the planned number
           planned: 1
           actual: 0
-          
+        
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
     at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)

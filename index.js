@@ -37,8 +37,14 @@ export class Test {
     this.name = name
     /** @type {null|number} */
     this._planned = null
-    /** @type {null|number} */
-    this._actual = null
+    /** @type {undefined|ReturnType<typeof setTimeout>} */
+    this._timeout
+    /** @type {number} */
+    this.TIMEOUT_MS = 5000  // the default timeout
+    /** @type {boolean} */
+    this._timedOut = false
+    /** @type {number} */
+    this._actual = 0
     /** @type {TestFn} */
     this.fn = fn
     /** @type {TestRunner} */
@@ -67,10 +73,24 @@ export class Test {
    * Plan the number of assertions.
    *
    * @param {number} n
-   * @returns {void}
+   * @param {number} [timeoutMS]
+   * @return {Promise<void>}
    */
-  plan (n) {
+  plan (n, timeoutMS) {
     this._planned = n
+
+    if (timeoutMS) {
+      this.TIMEOUT_MS = timeoutMS
+    }
+
+    return new Promise(resolve => {
+      this._waitLoop()
+
+      this._resolve = () => {
+        this._clearTimeout()
+        resolve()
+      }
+    })
   }
 
   /**
@@ -226,12 +246,14 @@ export class Test {
       )
     }
 
-    if (this._planned !== null) {
-      this._actual = ((this._actual || 0) + 1)
+    this._actual++
 
-      if (this._actual > this._planned) {
-        throw new Error(`More tests than planned in TEST *${this.name}*`)
-      }
+    if (this._planned !== null && this._actual > this._planned) {
+      throw new Error(`More tests than planned in TEST *${this.name}*`)
+    }
+
+    if (this._actual === this._planned) {
+      this._resolve && this._resolve()
     }
 
     const report = this.runner.report
@@ -244,6 +266,8 @@ export class Test {
       this._result.pass++
       return
     }
+
+    // fail
 
     const atErr = new Error(description)
     let err = atErr
@@ -283,6 +307,22 @@ export class Test {
     report('  ...')
   }
 
+  // b/c node will exit even if our promise has not resolved yet
+  _waitLoop () {
+    this._timeout = setTimeout(() => {
+      this._waitLoop()
+    }, 100 * 1000)
+
+    setTimeout(() => {  // timeout for tests
+      this._timedOut = true
+      this._resolve && this._resolve()
+    }, this.TIMEOUT_MS)
+  }
+
+  _clearTimeout () {
+    clearTimeout(this._timeout)
+  }
+
   /**
    * @returns {Promise<{
    *   pass: number,
@@ -300,11 +340,17 @@ export class Test {
 
     if (this._planned !== null) {
       if (this._planned > (this._actual || 0)) {
+        if (this._timedOut) {
+          throw new Error(`Test timed out after ${this.TIMEOUT_MS} ms
+            planned: ${this._planned}
+            actual: ${this._actual || 0}
+          `)
+        }
+
         throw new Error(`Test ended before the planned number
           planned: ${this._planned}
           actual: ${this._actual || 0}
-          `
-        )
+        `)
       }
     }
 
