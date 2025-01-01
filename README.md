@@ -80,8 +80,8 @@ tapzero('planning example', t => {
 
 ### Async + planning
 
-Return `t.plan()`, and then the test will automatically wait until the right
-number of assertions have been made. By default this will time out after 5 seconds.
+Return `.plan()`, and then the test will automatically wait until the right
+number of assertions have been made.
 
 >
 > [!NOTE]  
@@ -89,9 +89,11 @@ number of assertions have been made. By default this will time out after 5 secon
 >
 
 ```js
+import { test } from '@substrate-system/tapzero'
+
 test('Timeout before all the tests', t => {
   setTimeout(() => {
-      t.ok(true)
+    t.ok(true)
   }, 2000)  // default timeout is 5 seconds
 
   t.ok(true)
@@ -104,6 +106,20 @@ test('Timeout before all the tests', t => {
 
 #### set a different timeout value
 You can pass in a different number value to `.plan`, in milliseconds.
+
+```js
+test('Timeout before all the tests', t => {
+  setTimeout(() => {
+    t.ok(true)
+  }, 6000)
+
+  t.ok(true)
+  t.ok(true)
+
+  return t.plan(3, 10000)
+})
+```
+
 
 ## API
 No aliases, smaller API surface area
