@@ -138,7 +138,7 @@ test('Timeout before all the tests', t => {
 You can pass in a different number value to `.plan`, in milliseconds.
 
 ```js
-test('Timeout before all the tests', t => {
+test('Set a longer timeout value', t => {
   setTimeout(() => {
     t.ok(true)
   }, 6000)

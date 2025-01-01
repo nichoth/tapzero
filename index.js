@@ -39,6 +39,8 @@ export class Test {
     this._planned = null
     /** @type {undefined|ReturnType<typeof setTimeout>} */
     this._timeout
+    /** @type {undefined|ReturnType<typeof setTimeout>} */
+    this._timeouttimeout
     /** @type {number} */
     this.TIMEOUT_MS = 5000  // the default timeout
     /** @type {boolean} */
@@ -309,11 +311,11 @@ export class Test {
 
   // b/c node will exit even if our promise has not resolved yet
   _waitLoop () {
-    this._timeout = setTimeout(() => {
+    this._timeout = setTimeout(() => {  // timeout to keep the process open
       this._waitLoop()
     }, 100 * 1000)
 
-    setTimeout(() => {  // timeout for tests
+    this._timeouttimeout = setTimeout(() => {  // timeout for tests
       this._timedOut = true
       this._resolve && this._resolve()
     }, this.TIMEOUT_MS)
@@ -321,6 +323,7 @@ export class Test {
 
   _clearTimeout () {
     clearTimeout(this._timeout)
+    clearTimeout(this._timeouttimeout)
   }
 
   /**
