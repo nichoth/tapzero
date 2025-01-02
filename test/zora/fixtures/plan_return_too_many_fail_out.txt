@@ -1,0 +1,13 @@
+TAP version 13
+# Return .plan, execute too many tests
+ok 1 should be truthy
+ok 2 should be truthy
+ok 3 should be truthy
+ok 4 should be truthy
+ok 5 should be truthy
+file://$TAPE/index.js:$LINE
+  function rethrow () { throw err }
+                        ^
+
+Error: More tests than planned in TEST *Return .plan, execute too many tests*
+    at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)

@@ -51,10 +51,10 @@ export class Test {
     this.fn = fn
     /** @type {TestRunner} */
     this.runner = runner
-    /** @type {{ pass: number, fail: number }} */
+    /** @type {{ pass:number, fail:number }} */
     this._result = {
       pass: 0,
-      fail: 0
+      fail: 0,
     }
     /** @type {boolean} */
     this.done = false
@@ -328,8 +328,8 @@ export class Test {
 
   /**
    * @returns {Promise<{
-   *   pass: number,
-   *   fail: number
+   *   pass:number,
+   *   fail:number,
    * }>}
    */
   async run () {
@@ -491,12 +491,18 @@ export class TestRunner {
     let fail = 0
 
     for (const test of ts) {
-      // TODO: parallel execution
       const result = await test.run()
 
       total += result.fail + result.pass
       success += result.pass
       fail += result.fail
+
+      if (
+        test._planned !== null &&
+        (result.fail + result.pass) > test._planned
+      ) {
+        throw new Error(`More tests than planned in TEST *${test.name}*`)
+      }
     }
 
     this.completed = true
