@@ -253,6 +253,11 @@ export class Test {
      * it is null, b/c we call this.plan at the end.
      */
 
+    /**
+     * Make a queue of _asserts,
+     * then after `this.fn` has run, execute all the _asserts
+     */
+
     this._actual++
 
     if (this._planned !== null && this._actual > this._planned) {
