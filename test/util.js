@@ -12,10 +12,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const NUMBER_LINE = /^1\.\.\d+$/
 const FAIL_LINE = /^# fail[ ]{2}\d+$/
 
-// exports.collect = collect
-// exports.strip = strip
-// exports.trimPrefix = trimPrefix
-
 /**
  * @param {(a: string) => void} fn
  * @returns {(line: string) => void}

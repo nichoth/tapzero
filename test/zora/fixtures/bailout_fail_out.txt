@@ -1,6 +1,5 @@
 TAP version 13
 # will not go to the end
-ok 1 okay
 file://$TAPE/index.js:$LINE
   function rethrow () { throw err }
                         ^

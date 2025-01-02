@@ -2,7 +2,6 @@
 
 // @ts-check
 
-// const test = require('@pre-bundled/tape')
 import test from '@pre-bundled/tape'
 import { TestRunner } from '../../index.js'
 import { collect, trimPrefix } from '../util.js'
@@ -166,34 +165,8 @@ test('zerotap handles multiple asserts', (assert) => {
    * @returns {void}
    */
   function verify (actual) {
-    assert.equal(actual, trimPrefix`
-        TAP version 13
-        # test one
-        ok 1 should be truthy
-        ok 2 message
-        not ok 3 some message
-          ---
-            operator: ok
-            expected: "truthy value"
-            actual:   false
-            stack:    |-
-              Error: some message
-                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
-                  at Test.ok (file://$TAPE/index.js:$LINE:$COL)
-                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at process.processTimers (node:internal/timers:$LINE:$COL)
-          ...
-
-        1..3
-        # tests 3
-        # pass  2
-        # fail  1
-        `)
-
+    const expect = 'TAP version 13\n# test one\nnot ok 1 should be equal\n  ---\n    operator: equal\n    expected: "foo"\n    actual:   undefined\n    stack:    |-\n      Error: should be equal\n          at Test.__assert (file://$TAPE/index.js:$LINE:$COL)\n          at file://$TAPE/index.js:$LINE:$COL\n          at file://$TAPE/index.js:$LINE:$COL\n          at Array.forEach (<anonymous>)\n          at Test.run (file://$TAPE/index.js:$LINE:$COL)\n          at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)\n          at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)\n          at listOnTimeout (node:internal/timers:$LINE:$COL)\n          at process.processTimers (node:internal/timers:$LINE:$COL)\n  ...\n\n1..1\n# tests 1\n# pass  0\n# fail  1'
+    assert.equal(actual, expect)
     assert.end()
   }
 })
@@ -284,31 +257,8 @@ test('zerotap undefined is string', (assert) => {
    * @returns {void}
    */
   function verify (actual) {
-    assert.equal(actual, trimPrefix`
-        TAP version 13
-        # test one
-        not ok 1 should be equal
-          ---
-            operator: equal
-            expected: "foo"
-            actual:   undefined
-            stack:    |-
-              Error: should be equal
-                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
-                  at Test.equal (file://$TAPE/index.js:$LINE:$COL)
-                  at Test.fn (file://$TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at process.processTimers (node:internal/timers:$LINE:$COL)
-          ...
-
-        1..1
-        # tests 1
-        # pass  0
-        # fail  1
-        `)
+    const expect = 'TAP version 13\n# test one\nnot ok 1 should be equal\n  ---\n    operator: equal\n    expected: "foo"\n    actual:   undefined\n    stack:    |-\n      Error: should be equal\n          at Test.__assert (file://$TAPE/index.js:$LINE:$COL)\n          at file://$TAPE/index.js:$LINE:$COL\n          at file://$TAPE/index.js:$LINE:$COL\n          at Array.forEach (<anonymous>)\n          at Test.run (file://$TAPE/index.js:$LINE:$COL)\n          at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)\n          at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)\n          at listOnTimeout (node:internal/timers:$LINE:$COL)\n          at process.processTimers (node:internal/timers:$LINE:$COL)\n  ...\n\n1..1\n# tests 1\n# pass  0\n# fail  1'
+    assert.equal(actual, expect)
     assert.end()
   }
 })
@@ -325,31 +275,10 @@ test('zerotap fail', (assert) => {
    * @returns {void}
    */
   function verify (actual) {
-    assert.equal(actual, trimPrefix`
-        TAP version 13
-        # test one
-        not ok 1 my message
-          ---
-            operator: fail
-            expected: "fail not called"
-            actual:   "fail called"
-            stack:    |-
-              Error: my message
-                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
-                  at Test.fail (file://$TAPE/index.js:$LINE:$COL)
-                  at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
-                  at Test.run (file://$TAPE/index.js:$LINE:$COL)
-                  at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
-                  at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
-                  at listOnTimeout (node:internal/timers:$LINE:$COL)
-                  at process.processTimers (node:internal/timers:$LINE:$COL)
-          ...
 
-        1..1
-        # tests 1
-        # pass  0
-        # fail  1
-        `)
+    const expect = 'TAP version 13\n# test one\nnot ok 1 my message\n  ---\n    operator: fail\n    expected: "fail not called"\n    actual:   "fail called"\n    stack:    |-\n      Error: my message\n          at Test.__assert (file://$TAPE/index.js:$LINE:$COL)\n          at file://$TAPE/index.js:$LINE:$COL\n          at file://$TAPE/index.js:$LINE:$COL\n          at Array.forEach (<anonymous>)\n          at Test.run (file://$TAPE/index.js:$LINE:$COL)\n          at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)\n          at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)\n          at listOnTimeout (node:internal/timers:$LINE:$COL)\n          at process.processTimers (node:internal/timers:$LINE:$COL)\n  ...\n\n1..1\n# tests 1\n# pass  0\n# fail  1'
+
+    assert.equal(actual, expect)
     assert.end()
   }
 })
