@@ -347,7 +347,6 @@ export class Test {
    */
   async run () {
     this.runner.report('# ' + this.name)
-    this.fn(this)
     const maybeP = this.fn(this)
 
     // await Promise.all(this._assertionQueue.map(fn => {
