@@ -243,7 +243,7 @@ export class Test {
     pass, actual, expected,
     description, operator
   ) {
-    this._assertionQueue.push(() => {
+    setTimeout(() => {
       if (this.done) {
         throw new Error(
           'assertion occurred after test was finished: ' + this.name
@@ -328,7 +328,7 @@ export class Test {
       }
 
       report('  ...')
-    })
+    }, 0)
   }
 
   // b/c node will exit even if our promise has not resolved yet
@@ -363,7 +363,8 @@ export class Test {
     // run the function, then after that do the assertions
     // that way we can call .plan anywhere within the function and it will
     // be correct.
-    this._assertionQueue.forEach(assertion => assertion())
+
+    // this._assertionQueue.forEach(assertion => assertion())
 
     if (maybeP && typeof maybeP.then === 'function') {
       await maybeP
