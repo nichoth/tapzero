@@ -51,6 +51,7 @@ export class Test {
     this.fn = fn
     /** @type {TestRunner} */
     this.runner = runner
+    this._pass = 0
     this._assertionQueue = []
     /** @type {{ pass:number, fail:number }} */
     this._result = {
@@ -243,92 +244,115 @@ export class Test {
     pass, actual, expected,
     description, operator
   ) {
-    setTimeout(() => {
-      if (this.done) {
-        throw new Error(
-          'assertion occurred after test was finished: ' + this.name
-        )
-      }
+    // if it is the first time running this function
+    if (!this._pass) {
+      // then add all assertions to a queue,
+      // so that way we can call .plan anywhere in the function
+      this._assertionQueue.push(() => this.__assert(pass, actual, expected,
+        description, operator))
+    } else {
+      // else, this assertion was made in a callback;
+      // run it right away
+      this.__assert(pass, actual, expected, description, operator)
+    }
+  }
 
-      /**
-       * Problem is it is checking `this._planned`, and in the assert function
-       * it is null, b/c we call this.plan at the end.
-       */
+  /**
+   * @param {boolean} pass
+   * @param {unknown} actual
+   * @param {unknown} expected
+   * @param {string} description
+   * @param {string} operator
+   * @returns {void}
+   */
+  __assert (
+    pass, actual, expected,
+    description, operator
+  ) {
+    if (this.done) {
+      throw new Error(
+        'assertion occurred after test was finished: ' + this.name
+      )
+    }
 
-      /**
-       * Make a queue of _asserts,
-       * then after `this.fn` has run, execute all the _asserts
-       */
+    /**
+     * Problem is it is checking `this._planned`, and in the assert function
+     * it is null, b/c we call this.plan at the end.
+     */
 
-      /**
-       * __Edge case 1__
-       * We call _assert again within a `setTImeout`.
-       * It needs to be added to the assert queue, then needs to be executed also
-       *
-       * We need a more robust queue object. Needs a method `.add`, that will
-       * add to the queue, and also execute the new assertion.
-       */
+    /**
+     * Make a queue of _asserts,
+     * then after `this.fn` has run, execute all the _asserts
+     */
 
-      this._actual++
+    /**
+     * __Edge case 1__
+     * We call _assert again within a `setTImeout`.
+     * It needs to be added to the assert queue, then needs to be executed also
+     *
+     * We need a more robust queue object. Needs a method `.add`, that will
+     * add to the queue, and also execute the new assertion.
+     */
 
-      if (this._planned !== null && this._actual > this._planned) {
-        throw new Error(`More tests than planned in TEST *${this.name}*`)
-      }
+    this._actual++
 
-      if (this._actual === this._planned) {
-        this._resolve && this._resolve()
-      }
+    if (this._planned !== null && this._actual > this._planned) {
+      throw new Error(`More tests than planned in TEST *${this.name}*`)
+    }
 
-      const report = this.runner.report
+    if (this._actual === this._planned) {
+      this._resolve && this._resolve()
+    }
 
-      const prefix = pass ? 'ok' : 'not ok'
-      const id = this.runner.nextId()
-      report(`${prefix} ${id} ${description}`)
+    const report = this.runner.report
 
-      if (pass) {
-        this._result.pass++
-        return
-      }
+    const prefix = pass ? 'ok' : 'not ok'
+    const id = this.runner.nextId()
+    report(`${prefix} ${id} ${description}`)
 
-      // fail
+    if (pass) {
+      this._result.pass++
+      return
+    }
 
-      const atErr = new Error(description)
-      let err = atErr
-      if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
-        err = /** @type {Error} */ (actual)
-        actual = err.message
-      }
+    // fail
 
-      this._result.fail++
-      report('  ---')
-      report(`    operator: ${operator}`)
+    const atErr = new Error(description)
+    let err = atErr
+    if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
+      err = /** @type {Error} */ (actual)
+      actual = err.message
+    }
 
-      let ex = toJSON(expected)
-      let ac = toJSON(actual)
-      if (Math.max(ex.length, ac.length) > 65) {
-        ex = ex.replace(NEW_LINE_REGEX, '\n      ')
-        ac = ac.replace(NEW_LINE_REGEX, '\n      ')
+    this._result.fail++
+    report('  ---')
+    report(`    operator: ${operator}`)
 
-        report(`    expected: |-\n      ${ex}`)
-        report(`    actual:   |-\n      ${ac}`)
-      } else {
-        report(`    expected: ${ex}`)
-        report(`    actual:   ${ac}`)
-      }
+    let ex = toJSON(expected)
+    let ac = toJSON(actual)
+    if (Math.max(ex.length, ac.length) > 65) {
+      ex = ex.replace(NEW_LINE_REGEX, '\n      ')
+      ac = ac.replace(NEW_LINE_REGEX, '\n      ')
 
-      const at = findAtLineFromError(atErr)
-      if (at) {
-        report(`    at:       ${at}`)
-      }
+      report(`    expected: |-\n      ${ex}`)
+      report(`    actual:   |-\n      ${ac}`)
+    } else {
+      report(`    expected: ${ex}`)
+      report(`    actual:   ${ac}`)
+    }
 
-      report('    stack:    |-')
-      const st = (err.stack || '').split('\n')
-      for (const line of st) {
-        report(`      ${line}`)
-      }
+    const at = findAtLineFromError(atErr)
+    if (at) {
+      report(`    at:       ${at}`)
+    }
 
-      report('  ...')
-    }, 0)
+    report('    stack:    |-')
+    const st = (err.stack || '').split('\n')
+    for (const line of st) {
+      report(`      ${line}`)
+    }
+
+    report('  ...')
   }
 
   // b/c node will exit even if our promise has not resolved yet
@@ -360,11 +384,12 @@ export class Test {
   async run () {
     this.runner.report('# ' + this.name)
     const maybeP = this.fn(this)
+    this._pass = 1
     // run the function, then after that do the assertions
     // that way we can call .plan anywhere within the function and it will
     // be correct.
 
-    // this._assertionQueue.forEach(assertion => assertion())
+    this._assertionQueue.forEach(assertion => assertion())
 
     if (maybeP && typeof maybeP.then === 'function') {
       await maybeP

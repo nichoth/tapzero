@@ -6,9 +6,10 @@ file://$TAPE/index.js:$LINE
                         ^
 
 Error: More tests than planned in TEST *Plan an incorrect number of tests*
-    at Test._assert (file://$TAPE/index.js:$LINE:$COL)
-    at Test.ok (file://$TAPE/index.js:$LINE:$COL)
-    at Test.fn (file://$TEST/zora/fixtures/plan_fail.js:$LINE:$COL)
+    at Test.__assert (file://$TAPE/index.js:$LINE:$COL)
+    at file://$TAPE/index.js:$LINE:$COL
+    at file://$TAPE/index.js:$LINE:$COL
+    at Array.forEach (<anonymous>)
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
     at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
