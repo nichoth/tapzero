@@ -1,5 +1,5 @@
 {
-  "name": "@bicycle-codes/tapzero",
+  "name": "@substrate-system/tapzero",
   "version": "0.10.10",
   "description": "Smallest test library",
   "main": "dist/index.js",
