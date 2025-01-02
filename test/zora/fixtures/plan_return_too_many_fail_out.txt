@@ -1,0 +1,18 @@
+TAP version 13
+# Return .plan, execute too many tests
+ok 1 should be truthy
+ok 2 should be truthy
+ok 3 should be truthy
+file://$TAPE/index.js:$LINE
+  function rethrow () { throw err }
+                        ^
+
+Error: More tests than planned in TEST *Return .plan, execute too many tests*
+    at file://$TAPE/index.js:$LINE:$COL
+    at file://$TAPE/index.js:$LINE:$COL
+    at Array.map (<anonymous>)
+    at Test.run (file://$TAPE/index.js:$LINE:$COL)
+    at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
+    at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
+    at listOnTimeout (node:internal/timers:$LINE:$COL)
+    at process.processTimers (node:internal/timers:$LINE:$COL)

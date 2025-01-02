@@ -11,8 +11,6 @@ Error: Test ended before the planned number
           actual: 2
         
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
-    at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
-    at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)
-    at listOnTimeout (node:internal/timers:$LINE:$COL)
-    at process.processTimers (node:internal/timers:$LINE:$COL)
+    at process.processTicksAndRejections (node:internal/process/task_queues:$LINE:$COL)
+    at async TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     

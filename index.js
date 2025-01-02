@@ -230,6 +230,8 @@ export class Test {
     this._assert(pass, caught, expected, message || 'should throw', 'throws')
   }
 
+  _assertionQueue = []
+
   /**
    * @param {boolean} pass
    * @param {unknown} actual
@@ -242,71 +244,75 @@ export class Test {
     pass, actual, expected,
     description, operator
   ) {
-    if (this.done) {
-      throw new Error(
-        'assertion occurred after test was finished: ' + this.name
-      )
-    }
+    this._assertionQueue.push(() => {
+      if (this.done) {
+        throw new Error(
+          'assertion occurred after test was finished: ' + this.name
+        )
+      }
 
-    this._actual++
+      this._actual++
 
-    if (this._planned !== null && this._actual > this._planned) {
-      throw new Error(`More tests than planned in TEST *${this.name}*`)
-    }
+      if (this._planned !== null && (this._actual > this._planned)) {
+        this._clearTimeout()
+        console.log('this plan acgtual ', this._planned, this._actual)
+        throw new Error(`More tests than planned in TEST *${this.name}*`)
+      }
 
-    if (this._actual === this._planned) {
-      this._resolve && this._resolve()
-    }
+      if (this._actual === this._planned) {
+        this._resolve && this._resolve()
+      }
 
-    const report = this.runner.report
+      const report = this.runner.report
 
-    const prefix = pass ? 'ok' : 'not ok'
-    const id = this.runner.nextId()
-    report(`${prefix} ${id} ${description}`)
+      const prefix = pass ? 'ok' : 'not ok'
+      const id = this.runner.nextId()
+      report(`${prefix} ${id} ${description}`)
 
-    if (pass) {
-      this._result.pass++
-      return
-    }
+      if (pass) {
+        this._result.pass++
+        return
+      }
 
-    // fail
+      // fail
 
-    const atErr = new Error(description)
-    let err = atErr
-    if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
-      err = /** @type {Error} */ (actual)
-      actual = err.message
-    }
+      const atErr = new Error(description)
+      let err = atErr
+      if (actual && OBJ_TO_STRING.call(actual) === '[object Error]') {
+        err = /** @type {Error} */ (actual)
+        actual = err.message
+      }
 
-    this._result.fail++
-    report('  ---')
-    report(`    operator: ${operator}`)
+      this._result.fail++
+      report('  ---')
+      report(`    operator: ${operator}`)
 
-    let ex = toJSON(expected)
-    let ac = toJSON(actual)
-    if (Math.max(ex.length, ac.length) > 65) {
-      ex = ex.replace(NEW_LINE_REGEX, '\n      ')
-      ac = ac.replace(NEW_LINE_REGEX, '\n      ')
+      let ex = toJSON(expected)
+      let ac = toJSON(actual)
+      if (Math.max(ex.length, ac.length) > 65) {
+        ex = ex.replace(NEW_LINE_REGEX, '\n      ')
+        ac = ac.replace(NEW_LINE_REGEX, '\n      ')
 
-      report(`    expected: |-\n      ${ex}`)
-      report(`    actual:   |-\n      ${ac}`)
-    } else {
-      report(`    expected: ${ex}`)
-      report(`    actual:   ${ac}`)
-    }
+        report(`    expected: |-\n      ${ex}`)
+        report(`    actual:   |-\n      ${ac}`)
+      } else {
+        report(`    expected: ${ex}`)
+        report(`    actual:   ${ac}`)
+      }
 
-    const at = findAtLineFromError(atErr)
-    if (at) {
-      report(`    at:       ${at}`)
-    }
+      const at = findAtLineFromError(atErr)
+      if (at) {
+        report(`    at:       ${at}`)
+      }
 
-    report('    stack:    |-')
-    const st = (err.stack || '').split('\n')
-    for (const line of st) {
-      report(`      ${line}`)
-    }
+      report('    stack:    |-')
+      const st = (err.stack || '').split('\n')
+      for (const line of st) {
+        report(`      ${line}`)
+      }
 
-    report('  ...')
+      report('  ...')
+    })
   }
 
   // b/c node will exit even if our promise has not resolved yet
@@ -322,6 +328,13 @@ export class Test {
   }
 
   _clearTimeout () {
+    if (this._timeout && this._timeout.unref) {  
+      this._timeout.unref()
+    }
+    if (this._timeouttimeout && this._timeouttimeout.unref) {
+      this._timeouttimeout.unref()
+    }
+
     clearTimeout(this._timeout)
     clearTimeout(this._timeouttimeout)
   }
@@ -334,7 +347,16 @@ export class Test {
    */
   async run () {
     this.runner.report('# ' + this.name)
+    this.fn(this)
     const maybeP = this.fn(this)
+
+    // await Promise.all(this._assertionQueue.map(fn => {
+    //   return new Promise
+    //   // return fn()
+    // }))
+
+    this._assertionQueue.forEach(fn => fn())
+
     if (maybeP && typeof maybeP.then === 'function') {
       await maybeP
     }
