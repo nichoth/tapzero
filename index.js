@@ -248,6 +248,11 @@ export class Test {
       )
     }
 
+    /**
+     * Problem is it is checking `this._planned`, and in the assert function
+     * it is null, b/c we call this.plan at the end.
+     */
+
     this._actual++
 
     if (this._planned !== null && this._actual > this._planned) {
@@ -322,6 +327,9 @@ export class Test {
   }
 
   _clearTimeout () {
+    if (this._timeout?.unref) this._timeout.unref()
+    if (this._timeouttimeout?.unref) this._timeouttimeout.unref()
+
     clearTimeout(this._timeout)
     clearTimeout(this._timeouttimeout)
   }
