@@ -3,13 +3,13 @@ import { test } from '../../../index.js'
 const start = Number(new Date())
 
 test('Return .plan from an async function', async t => {
-    t.ok(true)
-    await sleep(100)
-    t.ok(true)
-    await sleep(100)
-    t.ok(true)
+    t.plan(3, 2000)
 
-    return t.plan(3, 2000)
+    t.ok(true)
+    await sleep(100)
+    t.ok(true)
+    await sleep(100)
+    t.ok(true)
 })
 
 test('check the times', t => {

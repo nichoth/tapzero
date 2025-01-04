@@ -82,7 +82,7 @@ export class Test {
    *
    * @param {number} n
    * @param {number} [timeoutMS]
-   * @return {Promise<void>}
+   * @return {void}
    */
   plan (n, timeoutMS) {
     this._planned = n
@@ -91,25 +91,23 @@ export class Test {
       this.TIMEOUT_MS = timeoutMS
     }
 
-    let resolver
+    // let resolver
     /** @type {Promise<void>} */
     const p = new Promise(resolve => {
       this._waitLoop()
 
-      resolver = () => {
-        this._clearTimeout()
-        resolve()
-      }
-
-      // this._resolve = () => {
+      // resolver = () => {
       //   this._clearTimeout()
       //   resolve()
       // }
+
+      this._resolve = () => {
+        this._clearTimeout()
+        resolve()
+      }
     })
 
-    this._resolve = resolver
-
-    return p
+    // this._resolve = resolver
   }
 
   /**
@@ -289,25 +287,6 @@ export class Test {
         'assertion occurred after test was finished: ' + this.name
       )
     }
-
-    /**
-     * Problem is it is checking `this._planned`, and in the assert function
-     * it is null, b/c we call this.plan at the end.
-     */
-
-    /**
-     * Make a queue of _asserts,
-     * then after `this.fn` has run, execute all the _asserts
-     */
-
-    /**
-     * __Edge case 1__
-     * We call _assert again within a `setTImeout`.
-     * It needs to be added to the assert queue, then needs to be executed also
-     *
-     * We need a more robust queue object. Needs a method `.add`, that will
-     * add to the queue, and also execute the new assertion.
-     */
 
     this._actual++
 
