@@ -1,0 +1,14 @@
+TAP version 13
+# Return .plan from an async function
+ok 1 should be truthy
+ok 2 should be truthy
+ok 3 should be truthy
+# check the times
+ok 4 should wait for a little bit
+ok 5 should resolve the test before it times out
+
+1..5
+# tests 5
+# pass  5
+
+# ok

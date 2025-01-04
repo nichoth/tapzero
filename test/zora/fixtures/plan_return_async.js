@@ -15,7 +15,6 @@ test('Return .plan from an async function', async t => {
 test('check the times', t => {
     const finish = Number(new Date())
     const diff = finish - start
-    console.log('**finish**', finish - start)
     t.ok(diff >= 200, 'should wait for a little bit')
     t.ok(diff < 1000, 'should resolve the test before it times out')
 })
