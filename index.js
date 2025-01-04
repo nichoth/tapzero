@@ -71,13 +71,10 @@ export class Test {
    */
   comment (msg) {
     // need to comment in the correct position amongst assertions
-    // this will always comment first in the output,
-    // b/c the assertions are done in two passes
     if (!this._pass) {
       this._assertionQueue.push(() => this.runner.report('# ' + msg))
       return 
     }
-    // this.runner.report('# ' + msg)
   }
 
   /**
@@ -94,14 +91,25 @@ export class Test {
       this.TIMEOUT_MS = timeoutMS
     }
 
-    return new Promise(resolve => {
+    let resolver
+    /** @type {Promise<void>} */
+    const p = new Promise(resolve => {
       this._waitLoop()
 
-      this._resolve = () => {
+      resolver = () => {
         this._clearTimeout()
         resolve()
       }
+
+      // this._resolve = () => {
+      //   this._clearTimeout()
+      //   resolve()
+      // }
     })
+
+    this._resolve = resolver
+
+    return p
   }
 
   /**
