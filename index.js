@@ -70,7 +70,14 @@ export class Test {
    * @returns {void}
    */
   comment (msg) {
-    this.runner.report('# ' + msg)
+    // need to comment in the correct position amongst assertions
+    // this will always comment first in the output,
+    // b/c the assertions are done in two passes
+    if (!this._pass) {
+      this._assertionQueue.push(() => this.runner.report('# ' + msg))
+      return 
+    }
+    // this.runner.report('# ' + msg)
   }
 
   /**

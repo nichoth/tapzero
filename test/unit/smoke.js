@@ -97,7 +97,7 @@ test('zerotap handles failures', (assert) => {
             actual:   "one"
             stack:    |-
               Error: this test fails
-                  at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+                  at Test.__assert (file://$TAPE/index.js:$LINE:$COL)
                   at Test.equal (file://$TAPE/index.js:$LINE:$COL)
                   at Test._ [as fn] (file://$TEST/unit/smoke.js:$LINE:$COL)
                   at Test.run (file://$TAPE/index.js:$LINE:$COL)
