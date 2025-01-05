@@ -96,8 +96,13 @@ tapzero('my cb test', async (t) => {
 ```
 
 ## Plan
+Plan the number of assertions. The test will fail if it executes more or fewer
+than the planned number of assertions.
 
-Plan the number of assertions. Note, `.plan` **must be called first**, before executing any assertions.
+>
+> [!IMPORTANT]  
+> `.plan` **must be called first**, before executing any assertions.
+>
 
 ```js
 tapzero('planning example', t => {
