@@ -51,7 +51,8 @@ export class Test {
     this.fn = fn
     /** @type {TestRunner} */
     this.runner = runner
-    this._pass = 0
+    /** @type {Promise<void>|undefined} */
+    this._planPromise
     this._assertionQueue = []
     /** @type {{ pass:number, fail:number }} */
     this._result = {
@@ -70,11 +71,7 @@ export class Test {
    * @returns {void}
    */
   comment (msg) {
-    // need to comment in the correct position amongst assertions
-    if (!this._pass) {
-      this._assertionQueue.push(() => this.runner.report('# ' + msg))
-      return 
-    }
+    this.runner.report('# ' + msg)
   }
 
   /**
@@ -91,15 +88,9 @@ export class Test {
       this.TIMEOUT_MS = timeoutMS
     }
 
-    // let resolver
     /** @type {Promise<void>} */
     const p = new Promise(resolve => {
       this._waitLoop()
-
-      // resolver = () => {
-      //   this._clearTimeout()
-      //   resolve()
-      // }
 
       this._resolve = () => {
         this._clearTimeout()
@@ -107,7 +98,7 @@ export class Test {
       }
     })
 
-    // this._resolve = resolver
+    this._planPromise = p
   }
 
   /**
@@ -257,31 +248,6 @@ export class Test {
     pass, actual, expected,
     description, operator
   ) {
-    // if it is the first time running this function
-    if (!this._pass) {
-      // then add all assertions to a queue,
-      // so that way we can call .plan anywhere in the function
-      this._assertionQueue.push(() => this.__assert(pass, actual, expected,
-        description, operator))
-    } else {
-      // else, this assertion was made in a callback;
-      // run it right away
-      this.__assert(pass, actual, expected, description, operator)
-    }
-  }
-
-  /**
-   * @param {boolean} pass
-   * @param {unknown} actual
-   * @param {unknown} expected
-   * @param {string} description
-   * @param {string} operator
-   * @returns {void}
-   */
-  __assert (
-    pass, actual, expected,
-    description, operator
-  ) {
     if (this.done) {
       throw new Error(
         'assertion occurred after test was finished: ' + this.name
@@ -296,6 +262,7 @@ export class Test {
 
     if (this._actual === this._planned) {
       this._resolve && this._resolve()
+      // this._clearTimeout()
     }
 
     const report = this.runner.report
@@ -309,7 +276,9 @@ export class Test {
       return
     }
 
-    // fail
+    // --------------------------------------
+    //   fail
+    // --------------------------------------
 
     const atErr = new Error(description)
     let err = atErr
@@ -357,6 +326,7 @@ export class Test {
 
     this._timeouttimeout = setTimeout(() => {  // timeout for tests
       this._timedOut = true
+      this._clearTimeout()
       this._resolve && this._resolve()
     }, this.TIMEOUT_MS)
   }
@@ -378,20 +348,18 @@ export class Test {
   async run () {
     this.runner.report('# ' + this.name)
     const maybeP = this.fn(this)
-    this._pass = 1
-    // run the function, then after that do the assertions
-    // that way we can call .plan anywhere within the function and it will
-    // be correct.
-
-    this._assertionQueue.forEach(assertion => assertion())
 
     if (maybeP && typeof maybeP.then === 'function') {
       await maybeP
     }
 
-    this.done = true
+    if (this._planned === null) {
+      this.done = true
+    }
 
     if (this._planned !== null) {
+      await this._planPromise
+
       if (this._planned > (this._actual || 0)) {
         if (this._timedOut) {
           throw new Error(`Test timed out after ${this.TIMEOUT_MS} ms
