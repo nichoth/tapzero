@@ -2,7 +2,7 @@ import { test } from '../../../index.js'
 
 const start = Number(new Date())
 
-test('Return .plan from an async function', async t => {
+test('.plan inside an async function', async t => {
     t.plan(3, 2000)
 
     t.ok(true)
