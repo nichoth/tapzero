@@ -101,7 +101,8 @@ than the planned number of assertions.
 
 >
 > [!IMPORTANT]  
-> `.plan` **must be called first**, before executing any assertions.
+> If you use `.plan`, it **must be called first**, before executing
+> any assertions.
 >
 
 ```js
