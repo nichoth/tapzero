@@ -1,5 +1,5 @@
 TAP version 13
-# Return .plan from an async function
+# .plan inside an async function
 ok 1 should be truthy
 ok 2 should be truthy
 ok 3 should be truthy

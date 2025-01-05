@@ -1,7 +1,7 @@
 import { test } from '../../../index.js'
 
-test('Execute fewer tests than planned', t => {
+test("Call .plan, don't execute enough tests", t => {
     t.plan(3)
-    t.ok('example')
-    t.ok('example 2')
+    t.ok('test 1')
+    t.ok('test 2')
 })

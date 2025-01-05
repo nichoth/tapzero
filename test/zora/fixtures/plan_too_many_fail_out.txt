@@ -1,5 +1,5 @@
 TAP version 13
-# Return .plan, execute too many tests
+# Call .plan, execute too many tests
 ok 1 should be truthy
 ok 2 should be truthy
 ok 3 should be truthy
@@ -7,11 +7,10 @@ file://$TAPE/index.js:$LINE
   function rethrow () { throw err }
                         ^
 
-Error: More tests than planned in TEST *Return .plan, execute too many tests*
-    at Test.__assert (file://$TAPE/index.js:$LINE:$COL)
-    at file://$TAPE/index.js:$LINE:$COL
-    at file://$TAPE/index.js:$LINE:$COL
-    at Array.forEach (<anonymous>)
+Error: More tests than planned in TEST *Call .plan, execute too many tests*
+    at Test._assert (file://$TAPE/index.js:$LINE:$COL)
+    at Test.ok (file://$TAPE/index.js:$LINE:$COL)
+    at Test.fn (file://$TEST/zora/fixtures/plan_too_many_fail.js:$LINE:$COL)
     at Test.run (file://$TAPE/index.js:$LINE:$COL)
     at TestRunner.run (file://$TAPE/index.js:$LINE:$COL)
     at Timeout._onTimeout (file://$TAPE/index.js:$LINE:$COL)

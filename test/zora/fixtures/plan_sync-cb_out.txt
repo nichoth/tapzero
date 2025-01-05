@@ -1,5 +1,5 @@
 TAP version 13
-# Return .plan, and wait for the planned number
+# .plan with a synchronous function + callbacks
 ok 1 test
 ok 2 test
 ok 3 test
