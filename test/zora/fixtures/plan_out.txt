@@ -8,9 +8,13 @@ ok 4 should be truthy
 # .plan with a sync function + callbacks
 ok 5 should be truthy
 ok 6 should be truthy
+# .plan with an async function + callbacks
+ok 7 should be truthy
+ok 8 should be truthy
+ok 9 should be truthy
 
-1..6
-# tests 6
-# pass  6
+1..9
+# tests 9
+# pass  9
 
 # ok

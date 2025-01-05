@@ -20,6 +20,14 @@ test('.plan with a sync function + callbacks', t => {
     setTimeout(() => t.ok(true), 20)
 })
 
+test('.plan with an async function + callbacks', async t => {
+    t.plan(3)
+    t.ok(true)
+    await sleep(10)
+    t.ok(true)
+    setTimeout(() => t.ok(true), 100)
+})
+
 /**
  * Wait for a number of miliseconds.
  * @param {number} ms 

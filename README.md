@@ -96,7 +96,7 @@ tapzero('my cb test', async (t) => {
 
 ## Plan
 
-Plan the number of assertions.
+Plan the number of assertions. Note, `.plan` **must be called first**, before executing any assertions.
 
 ```js
 tapzero('planning example', t => {
@@ -108,10 +108,13 @@ tapzero('planning example', t => {
 })
 ```
 
-### Async + planning
+### Callbacks + planning
 
-Return `.plan()`, and then the test will automatically wait until the right
-number of assertions have been made.
+Call `.plan()`, and the test will automatically wait until the right
+number of assertions have been made, or until the timeout (by default timeout
+is 5 seconds).
+
+You can execute tests either in a callback function, or via promises + `await`.
 
 >
 > [!NOTE]  
@@ -121,32 +124,32 @@ number of assertions have been made.
 ```js
 import { test } from '@substrate-system/tapzero'
 
-test('Timeout before all the tests', t => {
+test('Plan', async t => {
+  t.plan(3)
+
   setTimeout(() => {
     t.ok(true)
   }, 2000)  // default timeout is 5 seconds
 
   t.ok(true)
+  await sleep(50)
   t.ok(true)
-
-  // note return
-  return t.plan(3)
 })
 ```
 
 #### set a different timeout value
-You can pass in a different number value to `.plan`, in milliseconds.
+You can pass in a different timeout value to `.plan`, in milliseconds.
 
 ```js
 test('Set a longer timeout value', t => {
+  t.plan(3, 10000)
+
   setTimeout(() => {
     t.ok(true)
   }, 6000)
 
   t.ok(true)
   t.ok(true)
-
-  return t.plan(3, 10000)
 })
 ```
 
@@ -187,6 +190,10 @@ be async.
 ### `test.only(name, fn)`
 
 Like `test(name, fn)` except if you use `.only` this is the only test case that will run for the entire process, all other test cases using tape will be ignored.
+
+### `test.plan(number, [timeout])`
+
+Plan the number of assertions. Takes a second argument, `timeout`, that is a number in milliseconds to wait for the test.
 
 ### `test.skip(name, [fn])`
 
